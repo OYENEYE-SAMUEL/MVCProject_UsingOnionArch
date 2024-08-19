@@ -1,0 +1,39 @@
+﻿
+@model Application.DTO.PondRequestModel
+
+<div class="container d-flex align-items-center justify-content-center" >
+    <div class="card p-4 shadow-sm w-100" style="max-width: 650px;">
+        <h3 class="text-center mb-4">Create Pond</h3>
+        <form asp-action="CreatePond">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Name</label>
+                <input type="text" class="form-control" placeholder="Enter pond's name" asp-for="Name" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label">Description</label>
+                <input type="text" class="form-control" placeholder="Enter pond's description" asp-for="Description" />
+            </div>
+             <div class="mb-3">
+                <label asp-for="Dimension" class="form-label">Dimension sample(5x3)</label>
+                <input type="text" class="form-control" placeholder="Enter pond's dimension" asp-for="Dimension" />
+            </div>
+            <div class="d-grid">
+                <input type="submit" value="Create Pond" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="AllPonds">Back to List</a>
+</div>
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+

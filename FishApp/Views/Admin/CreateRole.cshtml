@@ -1,0 +1,41 @@
+﻿@model Application.DTO.RoleRequestModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - FishFarmingApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container d-flex align-items-center justify-content-center" style="height: 100vh;">
+        <div class="card p-4 shadow-sm w-100" style="max-width: 400px;">
+            <h3 class="text-center mb-4">Create Role</h3>
+            <form asp-action="CreateRole" method="post">
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Role Name</label>
+                    <input type="text" class="form-control" placeholder="Enter the role name" />
+                </div>
+                
+                <div class="d-grid mb-3">
+                    <input type="submit" value="Create Role" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

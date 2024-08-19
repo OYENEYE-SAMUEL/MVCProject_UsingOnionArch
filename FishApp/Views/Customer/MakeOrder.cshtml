@@ -1,0 +1,160 @@
+﻿@model Application.DTO.OrderRequestModel
+@{
+    ViewData["Title"] = "Create Order";
+}
+
+@{
+
+    if (ViewBag.response != null)
+    {
+        <div class="alert alert-success">
+            @TempData["response"]
+        </div>
+    }
+}
+
+<h2>Create a New Order</h2>
+
+<form asp-action="CreateOrder" method="post">
+    <div class="form-group">
+        <label asp-for="OrderStatus" class="control-label">Order Status</label>
+        <select asp-for="OrderStatus" class="form-control">
+            <option value="Pending">Pending</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+    </div>
+
+    <h3>Order Fish Items</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Fish</th>
+                <th>Quantity</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="order-fish-items">
+            @for (int i = 0; i < Model.OrderFishItems.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <select asp-for="OrderFishItems" class="form-control" name="OrderFishItems[@i].Key" asp-items="ViewBag.allFish"></select>
+                    </td>
+                    <td>
+                        <input asp-for="OrderFishItems" class="form-control" name="OrderFishItems[@i].Value" asp-items="ViewBag.allFish" type="number" min="1" />
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-success" onclick="addNewRow()">Add Fish Item</button>
+    <button type="submit" class="btn btn-primary">Submit Order</button>
+</form>
+
+@section Scripts {
+    <script type="text/javascript">
+        // Deserialize the FishList JSON passed from the ViewBag
+        var fishList = @Html.Raw(ViewBag.FishListJson);
+
+        function addNewRow() {
+            var table = document.getElementById('order-fish-items');
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+
+            var cell1 = row.insertCell(0);
+            var selectElement = document.createElement("select");
+            selectElement.setAttribute("name", "OrderFishItems[" + rowCount + "].Key");
+            selectElement.setAttribute("class", "form-control");
+
+            // Populate the select element with options
+            fishList.forEach(function (fish) {
+                var option = document.createElement("option");
+                option.value = fish.Value; // Id of the fish
+                option.text = fish.Text; // Name of the fish
+                selectElement.appendChild(option);
+            });
+
+            cell1.appendChild(selectElement);
+
+            var cell2 = row.insertCell(1);
+            var valueInput = document.createElement("input");
+            valueInput.setAttribute("name", "OrderFishItems[" + rowCount + "].Value");
+            valueInput.setAttribute("class", "form-control");
+            valueInput.setAttribute("type", "number");
+            valueInput.setAttribute("min", "1");
+            cell2.appendChild(valueInput);
+
+            var cell3 = row.insertCell(2);
+            var removeButton = document.createElement("button");
+            removeButton.setAttribute("type", "button");
+            removeButton.setAttribute("class", "btn btn-danger");
+            removeButton.setAttribute("onclick", "removeRow(this)");
+            removeButton.innerHTML = "Remove";
+            cell3.appendChild(removeButton);
+        }
+
+        function removeRow(button) {
+            var row = button.closest('tr');
+            row.parentNode.removeChild(row);
+        }
+    </script>
+}
+
+@* @model Application.DTO.OrderRequestModel
+@{
+
+    if (ViewBag.response != null)
+    {
+        @ViewBag.response
+        ;
+    }
+}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+</head>
+
+<div class="container d-flex align-items-center justify-content-center">
+    <div class="card p-4 shadow-sm w-100" style="max-width: 650px;">
+        <h3 class="text-center mb-4">Make Order</h3>
+
+        <form asp-action="MakeOrder" method="post">
+            <div class="form-group">
+                <input asp-for="CustomerEmail" value="" type="hidden" class="form-control" />
+            </div>
+            <ul>
+                @for (var i = 0; i < ViewBag.count; i++)
+                {
+                    <li>
+                        <div class="mb-3">
+                            <label asp-for="OrderFishItems" class="form-label">Fish Type</label>
+                            <select asp-for="OrderFish" class="form-control" name="OrderFish[@i].Key" asp-items="ViewBag.categoryAll">
+                                <option value="0">-- Select fish type--</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Quantity</label>
+                            <input type="number" class="form-control" placeholder="Quantity" name="OrderFish[@i].Value" />
+                        </div>
+
+
+                    </li>
+                }
+            </ul>
+            <button type="submit" class="btn btn-primary">Make Order</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+} *@
+
+

@@ -1,0 +1,48 @@
+﻿@model Application.DTO.StaffReponseModel
+
+@{
+    ViewData["Title"] = "Get Manager";
+}
+
+<h1>Get Manager</h1>
+
+@if (Model != null)
+{
+    <h2>Manager Details</h2>
+    <div>
+        <strong>Id:</strong> @Model.Id
+    </div>
+    <div>
+        <strong>FirstName:</strong> @Model.FirstName
+    </div>
+    <div>
+        <strong>LastName:</strong> @Model.LastName
+    </div>
+    <div>
+        <strong>UserEmail:</strong> @Model.Email
+    </div>
+    <div>
+        <strong>Phone:</strong> @Model.PhoneNumber
+    </div>
+    <div>
+        <strong>Gender:</strong> @Model.Gender
+    </div>
+    <div>
+        <strong>Address:</strong> @Model.Address
+    </div>
+ 
+    <div>
+        <strong>Qualification:</strong> @Model.Qualification
+    </div>
+    <div>
+        <strong>YearOfExperience:</strong> @Model.YearOfExperience
+    </div>
+}
+else
+{
+    <div>
+        <strong>No manager is found.</strong>
+    </div>
+}
+
+

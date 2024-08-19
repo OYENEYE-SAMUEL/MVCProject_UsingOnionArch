@@ -1,0 +1,57 @@
+﻿@model Application.DTO.FishRequestModel
+
+
+<div class="container d-flex align-items-center justify-content-center">
+    <div class="card p-4 shadow-sm w-100" style="max-width: 650px;">
+        <h3 class="text-center mb-4">Create Category</h3>
+        <form asp-action="CreateFish">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Name</label>
+                <input type="text" class="form-control" placeholder="Enter fish's name" asp-for="Name" required />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Period" class="form-label">Period</label>
+                <input type="text" class="form-control" placeholder="Enter fish's period" asp-for="Period" required />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Price" class="form-label">Price</label>
+                <input type="text" class="form-control" placeholder="Enter the price" asp-for="Price" required />
+                <span asp-validation-for="Price" style="color: red"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Quantity" class="form-label">Quantity</label>
+                <input type="text" class="form-control" placeholder="Enter the quantity" asp-for="Quantity" required />
+            </div>
+            <div class="mb-3">
+                <label asp-for="FishPonds" class="form-label">Ponds</label>
+                <select asp-for="FishPonds" class="form-control" asp-items="ViewBag.allPond" required>
+                    <option value="0">-- Select pond --</option>
+                    <span asp-validation-for="FishPonds" style="color: red"></span>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="CategoryType" class="form-label">Category Type</label>
+                <select class="form-control" asp-for="CategoryType" asp-items="Html.GetEnumSelectList<Domain.Enum.CategoryType>()">
+                    <option value="">select category</option>
+                </select>
+            </div>
+
+            <div class="d-grid">
+                <input type="submit" value="Create Category" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="AllCategories">Back to List</a>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

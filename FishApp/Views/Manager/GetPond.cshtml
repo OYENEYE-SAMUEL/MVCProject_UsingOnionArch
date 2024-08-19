@@ -1,0 +1,47 @@
+﻿@model Application.DTO.PondResponseModel
+@{
+    ViewData["Title"] = "Get Pond";
+}
+
+@if (Model != null)
+{
+    <h2>Pond's Details</h2>
+    <div>
+        <strong>Name:</strong> @Model.Name
+    </div>
+    <div>
+        <strong>Description:</strong> @Model.Description
+    </div>
+    <div>
+        <strong>Pond Size:</strong> @Model.PondSize
+    </div>
+    <div>
+        <strong>Space Remain:</strong> @Model.SpaceRemain
+    </div>
+    <div>
+        <strong>Dimension:</strong> @Model.Dimension
+    </div>
+
+    <div>
+        <strong>Dimension:</strong> @Model.CreatedBy
+    </div>
+
+    <div>
+        <strong>Dimension:</strong> @Model.DateCreated
+    </div>
+    <div>
+        <strong>Fish Contain:</strong>
+        <ul>
+            @foreach (var fishPond in Model.FishPonds)
+            {
+                <li>@fishPond.Fish.Name (Quantity: @fishPond.Fish.Quantity)</li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+    <div>
+        <strong>No pond is found.</strong>
+    </div>
+}

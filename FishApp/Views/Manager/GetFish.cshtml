@@ -1,0 +1,39 @@
+﻿@model Application.DTO.FishReponseModel
+@{
+    ViewData["Title"] = "Get Fish";
+}
+
+@if (Model != null)
+{
+    <h2>Fish's Details</h2>
+    <div>
+        <strong>Name:</strong> @Model.Name
+    </div>
+    <div>
+        <strong>Description:</strong> @Model.Price
+    </div>
+    <div>
+        <strong>Pond Size:</strong> @Model.Period
+    </div>
+    <div>
+        <strong>Space Remain:</strong> @Model.CategoryType
+    </div>
+    <div>
+        <strong>Dimension:</strong> @Model.Quantity
+    </div>
+
+    <div>
+        <strong>Dimension:</strong> @Model.CreatedBy
+    </div>
+
+    <div>
+        <strong>Dimension:</strong> @Model.DateCreated
+    </div>
+}
+else
+{
+    <div>
+        <strong>No pond is found.</strong>
+    </div>
+}
+

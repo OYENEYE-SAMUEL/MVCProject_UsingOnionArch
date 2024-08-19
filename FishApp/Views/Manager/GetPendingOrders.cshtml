@@ -1,0 +1,51 @@
+﻿@using Application.DTO
+@model ICollection<OrderResponseModel>
+
+@{
+    ViewData["Title"] = "All Ponds";
+    int count = 0;
+}
+
+<h2>Pending Orders</h2>
+
+@if(Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>S/N</th>
+                <th>Customer Email</th>
+                <th>Total Price</th>
+                <th>Date Ordered</th>
+                <th>Items Order</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                count++;
+                <tr>
+                    <td>@count</td>
+                    <td>@order.Customer.Email</td>
+                    <td>@order.TotalPrice</td>
+                    <td>@order.DateOrder</td>
+                    <td>@foreach(var item in order.OrderFishItems)
+                        {
+                            <div>@item.Key: @item.Value</div>
+                        }
+                    </td>
+                    <td>
+                        <a href="@Url.Action("ApprovedOrders", "Orders", new { id = order.Id })" class="btn btn-primary">Approve</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    <p>No Order is initialize.......</p>
+}
+

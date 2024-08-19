@@ -1,0 +1,14 @@
+﻿@model OrderResponseModel
+
+<h2>Order Approved</h2>
+
+<p>Order ID: @Model.Id</p>
+<p>Customer: @Model.CreatedBy</p>
+<p>Total Price: @Model.TotalPrice</p>
+<p>Date Ordered: @Model.DateOrder</p>
+<p>Status: @Model.OrderStatus</p>
+
+<p>The order has been successfully approved.</p>
+
+<a href="@Url.Action("GetPendingOrders", "Orders")" class="btn btn-secondary">Back to Pending Orders</a>
+

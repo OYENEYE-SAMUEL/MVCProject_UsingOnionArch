@@ -1,0 +1,62 @@
+﻿@using Application.DTO
+@using Domain.Entities
+@model ICollection<FishReponseModel>
+
+
+
+@{
+    ViewData["Title"] = "All Fish";
+    int count = 0;
+}
+
+<p>
+    <a asp-action="CreateFish">Create</a>
+</p>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>S/N</th>
+                <th>Name</th>
+                <th>Period</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Pond's Name</th>
+                <th>Created By</th>
+                <th>Dated Created</th>
+                <th>Category Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model)
+            {
+                count++;
+                <tr>
+                    <td>@count</td>
+                    <td>@category.Name</td>
+                    <td>@category.Period</td>
+                    <td>@category.Price</td>
+                    <td>@category.Quantity</td>
+                    <td>
+                        @foreach (var pond in category.FishPonds)
+                        {
+                            @pond.Pond.Name
+                        }
+                    </td>
+                    <td>@category.CreatedBy</td>
+                    <td>@category.DateCreated</td>
+                    <td>@category.CategoryType</td>
+
+                    <td><a asp-action="GetFish" asp-controller="Manager" asp-route-id="@category.Id">Details</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    <p>No category data to view.......</p>
+}

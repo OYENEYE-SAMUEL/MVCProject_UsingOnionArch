@@ -1,0 +1,67 @@
+﻿@using Application.DTO
+@using Domain.Entities
+@model ICollection<PondResponseModel>
+
+@{
+    ViewData["Title"] = "All Ponds";
+    int count = 0;
+}
+
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["message"]
+    </div>
+}
+
+<p>
+    <a asp-action="CreatePond">Create Pond</a>
+</p>
+
+<h1>All Ponds</h1>
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>S/N</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>PondSize</th>
+                <th>Dimension</th>
+                <th>Space Remain</th>
+                <th>Fish Contain</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pond in Model)
+            {
+                count++;
+                <tr>
+                    <td>@count</td>
+                    <td>@pond.Name</td>
+                    <td>@pond.Description</td>
+                    <td>@pond.PondSize</td>
+                    <td>@pond.Dimension</td>
+                    <td>@pond.SpaceRemain</td>
+                    <td>
+                        @foreach(var pon in pond.FishPonds)
+                        {
+                            @pon.Fish.Name
+                        }
+                    </td>
+                    <td><a asp-action="GetPond" asp-controller="Manager" asp-route-id="@pond.Id">Details</a></td>
+                    <td><a asp-action="UpdatePond" asp-controller="Manager" asp-route-id="@pond.Id">Edit</a></td>
+                    <td><a asp-action="DeletePond" asp-controller="Manager" asp-route-name="@pond.Name">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    <p>No pond data to view........</p>
+}
+
+

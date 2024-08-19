@@ -1,0 +1,60 @@
+﻿@using Application.DTO
+@model ICollection<StaffReponseModel>
+
+
+
+
+@{
+    ViewData["Title"] = "All Managers";
+    int count = 0;
+}
+
+<p>
+    <a asp-action="RegisterManager">Register</a>
+</p>
+
+<h1>All Managers</h1>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+        <thead>
+        <thead>
+            <tr>
+                <th>S/N</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone No</th>
+                <th>Address</th>
+                <th>Gender</th>
+                <th>Qualification</th>
+                <th>Year Of Experience</th>
+            </tr>
+        </thead>
+        <tbody>
+                    @foreach (var manager in Model)
+                    {
+                        count++;
+                <tr>
+                    <td>@count</td>
+                    <td>@manager.FirstName</td>
+                    <td>@manager.LastName</td>
+                    <td>@manager.Email</td>
+                    <td>@manager.PhoneNumber</td>
+                    <td>@manager.Address</td>
+                    <td>@manager.Gender</td>
+                    <td>@manager.Qualification</td>
+                    <td>@manager.YearOfExperience</td>
+                    <td>@manager.DateCreated</td>
+                    <td><a asp-action="GetManager" asp-controller="Admin" asp-route-email="@manager.Email">Details</a></td>
+                </tr>
+                    }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No manager data to load...</p>
+}

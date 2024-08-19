@@ -1,0 +1,19 @@
+﻿@using System.Security.Claims
+
+
+@{
+    if (@User.FindFirstValue(ClaimTypes.Role) == "Admin")
+    {
+        <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="DashBoard">DashBoard</a>
+    }
+
+    if (@User.FindFirstValue(ClaimTypes.Role) == "Customer")
+    {
+        <a class="dropdown-item" asp-area="" asp-controller="Customer" asp-action="DashBoard">Dashboard</a>
+    }
+
+    if (@User.FindFirstValue(ClaimTypes.Role) == "Manager")
+    {
+        <a class="dropdown-item" asp-area="" asp-controller="Manager" asp-action="DashBoard">Dashboard</a>
+    }
+}

@@ -1,0 +1,28 @@
+﻿@{
+    @if (TempData["message"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["message"]
+        </div>
+    }
+
+
+    @if (TempData["notice"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["notice"]
+        </div>
+    }
+}
+<table>
+    <tbody>
+        <tr>
+            <td><a asp-controller="Admin" asp-action="AllPonds" class="btn btn-secondary">All Ponds</a></td>
+            <td><a asp-controller="Manager" asp-action="RegisterManager" class="btn btn-secondary">Register Manager</a></td>
+            <td><a asp-controller="Admin" asp-action="AllManager" class="btn btn-secondary">All Managers</a></td>
+            <td><a asp-controller="Admin" asp-action="AllFish" class="btn btn-secondary">All Fish</a></td>
+            <td><a asp-controller="Admin" asp-action="AllOrders" class="btn btn-secondary">All Orders</a></td>
+            <td><a asp-controller="Admin" asp-action="CreateRole" class="btn btn-secondary">Create Role</a></td>
+        </tr>
+    </tbody>
+</table>

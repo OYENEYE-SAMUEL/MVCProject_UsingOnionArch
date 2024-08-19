@@ -1,0 +1,29 @@
+﻿
+@{
+    // if(TempData["alert"] != null)
+    // {
+    //     @TempData["alert"]
+    // }
+
+    if (TempData["message"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["message"]
+        </div>
+    }
+}
+<table>
+    <tbody>
+        <tr>
+            <td><a asp-controller="Customer" asp-action="AllCategories" class="btn btn-secondary">All Category</a></td>
+            <td><a asp-controller="Customer" asp-action="OrderCount" class="btn btn-secondary">Make Order</a></td>
+            <td><a asp-controller="Customer" asp-action="AllOrders" class="btn btn-secondary">All Orders</a></td>
+            <td><a asp-controller="Customer" asp-action="ViewProfile" class="btn btn-secondary">View Profile</a></td>
+            <td><a asp-controller="Customer" asp-action="ViewCustomerWallet" class="btn btn-secondary">View Wallet</a></td>
+            <td><a asp-controller="Customer" asp-action="FundWallet" class="btn btn-secondary">Fund Wallet</a></td>
+            <td><a asp-controller="Customer" asp-action="UpdateCustomer" class="btn btn-secondary">Update Profile</a></td>
+        </tr>
+    </tbody>
+</table>
+
+
