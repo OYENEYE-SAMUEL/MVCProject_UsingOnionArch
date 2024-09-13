@@ -17,7 +17,9 @@ namespace Infrastructure.Repositories
         }
         public int Save()
         {
-            return _fishContext.SaveChanges();
+            var save = _fishContext.SaveChanges();
+            return save;
+
         }
     }
 }

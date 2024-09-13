@@ -1,0 +1,113 @@
+﻿@using Application.DTO
+@model CustomerRequestModel
+
+@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+<style>
+    .container {
+        min-height: 100vh;
+        background-color: #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .text-primary {
+        color: #007bff !important;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .text-secondary {
+        color: #6c757d !important;
+    }
+
+    .font-weight-bold {
+        font-weight: 600;
+    }
+
+    .btn-success {
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+</style>
+
+
+<div class="container d-flex align-items-center justify-content-center">
+    <div class="card p-4 shadow-sm w-100" style="max-width: 650px; background-color: #f8f9fa; border-radius: 10px;">
+        <h3 class="text-center mb-4 text-primary">Fund Wallet</h3>
+        <form asp-action="FundWallet" method="post">
+            <div class="form-group">
+                <label asp-for="Amount" class="font-weight-bold text-secondary">Amount to Add:</label>
+                <input type="number" step="0.01" min="0" asp-for="Amount" class="form-control" placeholder="Enter amount" style="border: 2px solid #007bff; border-radius: 5px;" />
+            </div>
+            <input type="hidden" name="email" value="@ViewData["user"]" />
+            <button type="submit" class="btn btn-success btn-block mt-4" style="background-color: #28a745; border: none; font-size: 18px; padding: 10px 0;">
+                Fund Wallet
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <div class="container d-flex align-items-center justify-content-center">
+    <div class="card p-4 shadow-sm w-100" style="max-width: 650px;">
+        <h3 class="text-center mb-4">Fund Wallet</h3>
+        <form asp-action="FundWallet">
+
+            <div>
+                <hr />
+                <form asp-action="FundWallet" method="post">
+                    <div class="form-group">
+                        <label asp-for="Amount">Amount to Add:</label>
+                        <input type="number" step="0.01" min="0" asp-for="Amount" class="form-control" />
+                    </div>
+                    <input type="hidden" name="email" value="@ViewData["user"]" />
+                    <button type="submit" class="btn btn-primary">Fund Wallet</button>
+                </form>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+ *@

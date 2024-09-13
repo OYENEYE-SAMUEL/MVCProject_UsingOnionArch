@@ -47,7 +47,10 @@
                     <td>
                         @foreach (var pon in pond.FishPonds)
                         {
-                            @pon.Fish.Name
+                            <div>
+                                @pon.Fish.Name
+                            </div>
+                           
                         }
                     </td>
                     <td><a asp-action="GetPond" asp-controller="Manager" asp-route-id="@pond.Id">Details</a></td>

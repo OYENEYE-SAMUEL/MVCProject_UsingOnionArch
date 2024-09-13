@@ -1,0 +1,97 @@
+﻿/* General body styles */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Center the container */
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style the card */
+.card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 650px;
+}
+
+    /* Heading styles */
+    .card h3 {
+        color: #343a40;
+        font-size: 1.75rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+/* Label and input styles */
+.form-label {
+    font-size: 0.95rem;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    border-radius: 5px;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s ease;
+}
+
+    /* Input focus effect */
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: none;
+    }
+
+/* Gender select styles */
+select.form-control {
+    appearance: none;
+    padding-right: 1.5rem;
+}
+
+    /* Add a down arrow to the select */
+    select.form-control:after {
+        content: "▼";
+        position: absolute;
+        right: 10px;
+        pointer-events: none;
+    }
+
+/* Button styles */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.75rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+    /* Button hover effect */
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+    .card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .card h3 {
+        font-size: 1.5rem;
+    }
+}

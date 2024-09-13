@@ -48,7 +48,7 @@ namespace Application.Services
 
             return new Response<RoleResponseModel>
             {
-                Message = $"Role created successfully",
+                Message = "Role created successfully",
                 Status = true,
                 Value = new RoleResponseModel
                 {

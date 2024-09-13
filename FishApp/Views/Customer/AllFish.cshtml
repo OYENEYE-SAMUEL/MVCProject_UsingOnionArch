@@ -2,31 +2,88 @@
 @using Domain.Entities
 @model ICollection<FishReponseModel>
 
-
-
 @{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
     ViewData["Title"] = "All Fish";
     int count = 0;
 }
 
-<p>
-    <a asp-action="CreateFish">Create</a>
-</p>
+<style>
+    /* Create Button Styling */
+    .create-btn {
+        background-color: #3498db;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+        .create-btn:hover {
+            background-color: #2980b9;
+        }
+
+    /* Table Styling */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 18px;
+        text-align: left;
+    }
+
+        .table thead th {
+            background-color: #34495e;
+            color: white;
+            padding: 12px;
+        }
+
+        .table tbody td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+    .table-striped tbody tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+
+    /* Details Button Styling */
+    .btn-info {
+        background-color: #1abc9c;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+        .btn-info:hover {
+            background-color: #16a085;
+        }
+
+    /* Alert Message Styling */
+    .alert-warning {
+        background-color: #f39c12;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+    }
+</style>
+
+
+
 
 @if (Model.Any())
 {
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>S/N</th>
                 <th>Name</th>
                 <th>Period</th>
                 <th>Price</th>
-                <th>Quantity</th>
-                <th>Pond's Name</th>
-                <th>Created By</th>
-                <th>Dated Created</th>
                 <th>Category Type</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -38,25 +95,15 @@
                     <td>@category.Name</td>
                     <td>@category.Period</td>
                     <td>@category.Price</td>
-                    <td>@category.Quantity</td>
-                    <td>
-                        @foreach (var pond in category.FishPonds)
-                        {
-                            @pond.Pond.Name
-                        }
-                    </td>
-                    <td>@category.CreatedBy</td>
-                    <td>@category.DateCreated</td>
                     <td>@category.CategoryType</td>
-
-                    <td><a asp-action="GetFish" asp-controller="Manager" asp-route-id="@category.Id">Details</a></td>
+                    <td><a asp-action="GetFish" asp-controller="Customer" asp-route-id="@category.Id" class="btn btn-info">Details</a></td>
                 </tr>
             }
         </tbody>
     </table>
-
 }
 else
 {
-    <p>No category data to view.......</p>
+    <p class="alert alert-warning">No category data to view.......</p>
 }
+

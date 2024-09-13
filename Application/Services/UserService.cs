@@ -19,6 +19,7 @@ namespace Application.Services
             _userRepo = userRepo;  
             _unitOfWork = unitOfWork;
         }
+
         public Response<UserResponseModel> Login(UserRequestModel model)
         {
             var user = _userRepo.Get(model.Email);
@@ -30,8 +31,8 @@ namespace Application.Services
                     Status = false,
                 };
             }
-            var salt = BCrypt.Net.BCrypt.GenerateSalt(20);
-            var hashPassword = BCrypt.Net.BCrypt.Verify(model.Password, salt);
+          /*  var salt = BCrypt.Net.BCrypt.GenerateSalt(20);*/
+            var hashPassword = BCrypt.Net.BCrypt.Verify(model.Password, user.Password);
             if(!hashPassword)
             {
                 return new Response<UserResponseModel>
@@ -41,7 +42,6 @@ namespace Application.Services
                 };
             }
 
-
             return new Response<UserResponseModel>
             {
                 Message = "Login Successfully",
@@ -50,9 +50,19 @@ namespace Application.Services
                 {
                     Id = user.Id,
                     Email = user.Email,
-                    UserRoles = user.UserRoles,
-                    DateCreated = DateTime.UtcNow,
-                    HashSalt = salt
+                    FullName = user.FullName,
+                    UserRoles = user.UserRoles.Select(r => new  Role
+                    {
+                        Id = r.Id,
+                        Name = r.Role.Name,
+                    }).ToList()
+
+                    //UserRoles = user.UserRoles.Select(t => new UserRole
+                    //{
+                    //     Id = t.Id,
+                    //    Role = t.Role,
+                    //}).ToList()
+
                 }
             };
         }

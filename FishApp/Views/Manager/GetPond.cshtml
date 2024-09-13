@@ -1,4 +1,131 @@
 ﻿@model Application.DTO.PondResponseModel
+
+
+<style>
+    .pond-details-container {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #4CAF50;
+        font-family: 'Arial', sans-serif;
+        margin-bottom: 20px;
+    }
+
+    .pond-detail {
+        margin-bottom: 15px;
+        font-family: 'Verdana', sans-serif;
+    }
+
+        .pond-detail strong {
+            color: #333;
+        }
+
+    .pond-image {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-top: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    ul {
+        list-style-type: disc;
+        padding-left: 20px;
+    }
+
+    li {
+        color: #4CAF50;
+        font-family: 'Verdana', sans-serif;
+    }
+
+    .no-pond {
+        text-align: center;
+        color: #FF5722;
+        font-weight: bold;
+    }
+
+</style>
+
+
+
+@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    ViewData["Title"] = "Get Pond";
+}
+
+<div class="pond-details-container">
+    @if (Model != null)
+    {
+        <h2>Pond's Details</h2>
+        <div class="pond-detail">
+            <strong>Name:</strong> @Model.Name
+        </div>
+        <div class="pond-detail">
+            <strong>Description:</strong> @Model.Description
+        </div>
+        <div class="pond-detail">
+            <strong>Pond Size:</strong> @Model.PondSize
+        </div>
+        <div class="pond-detail">
+            <strong>Space Remain:</strong> @Model.SpaceRemain
+        </div>
+        <div class="pond-detail">
+            <strong>Pond Image:</strong>
+            <img src="~/Uploads/@Model.PondImage" alt="Pond Image" class="pond-image" />
+        </div>
+        <div class="pond-detail">
+            <strong>Dimension:</strong> @Model.Dimension
+        </div>
+        <div class="pond-detail">
+            <strong>Created By:</strong> @Model.CreatedBy
+        </div>
+        <div class="pond-detail">
+            <strong>Date & Time Created:</strong> @Model.DateCreated
+        </div>
+        <div class="pond-detail">
+            <strong>Fish Contain:</strong>
+            <ul>
+                @foreach (var fishPond in Model.FishPonds)
+                {
+                    <li>@fishPond.Fish.Name (Quantity: @fishPond.Fish.Quantity)</li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="no-pond">
+            <strong>No pond is found.</strong>
+        </div>
+    }
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model Application.DTO.PondResponseModel
 @{
     ViewData["Title"] = "Get Pond";
 }
@@ -19,15 +146,18 @@
         <strong>Space Remain:</strong> @Model.SpaceRemain
     </div>
     <div>
+        <strong>Pond Image:</strong> @Model.PondImage
+    </div>
+    <div>
         <strong>Dimension:</strong> @Model.Dimension
     </div>
 
     <div>
-        <strong>Dimension:</strong> @Model.CreatedBy
+        <strong>Created By:</strong> @Model.CreatedBy
     </div>
 
     <div>
-        <strong>Dimension:</strong> @Model.DateCreated
+        <strong>Date & Time Created:</strong> @Model.DateCreated
     </div>
     <div>
         <strong>Fish Contain:</strong>
@@ -45,3 +175,6 @@ else
         <strong>No pond is found.</strong>
     </div>
 }
+ *@
+
+       

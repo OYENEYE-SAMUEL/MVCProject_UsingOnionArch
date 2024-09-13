@@ -24,31 +24,51 @@ namespace Infrastructure.Context
         public DbSet<FishPond> FishPonds => Set<FishPond>();
         public DbSet<Customer> Customers => Set<Customer>();
         public DbSet<Order> Orders => Set<Order>();
-        public DbSet<OrderFish> OrderFishItems => Set<OrderFish>();
-        public DbSet<Notification> Notifications => Set<Notification>();
+        public DbSet<OrderItem> OrderItems => Set<OrderItem>();
+        public DbSet<OrderFish> OrderFishes => Set<OrderFish>();
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<OrderFish>()
+
+            var adminUserId = Guid.NewGuid();
+            var adminRoleId = Guid.NewGuid();
+            var userRoleId = Guid.NewGuid();
+
+            modelBuilder.Entity<OrderItem>()
                 .HasOne(f => f.Order)
-                .WithMany(d => d.OrderFishItems)
+                .WithMany(d => d.OrderItems)
                 .HasForeignKey(f => f.OrderId);
 
             modelBuilder.Entity<User>()
                 .HasData(new User
                 {
+                    Id = adminUserId,
                     Email = "superadmin@gmail.com",
                     Password = BCrypt.Net.BCrypt.HashPassword("superadmin"),
-                    ConfirmedPassword = BCrypt.Net.BCrypt.HashPassword("superadmin"),
+                    ConfirmedPassword = "superadmin",
                     FullName = "Super Admin",
                     CreatedBy = "Super Admin",
+                    IsDeleted = false,
                 });
             modelBuilder.Entity<Role>()
                 .HasData(new Role
                 {
-                    Name = "Admin",
+                   Id = adminRoleId,
+                   Name = "Admin"
 
                 });
-           
+
+            modelBuilder.Entity<UserRole>()
+               .HasData(new UserRole
+               {
+                   Id = userRoleId,
+                   RoleId = adminRoleId,
+                   UserId = adminUserId,
+
+               });
+
+
         }
 
     }

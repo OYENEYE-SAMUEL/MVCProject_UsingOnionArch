@@ -1,0 +1,104 @@
+﻿@model FishApp.ViewModel.PondUpdateViewModel
+
+
+<style>
+        h4 {
+        font - family: 'Arial', sans - serif;
+        font - weight: bold;
+        color: #2c3e50;
+        text - transform: uppercase;
+        margin - bottom: 15px;
+    }
+
+    hr {
+        border: 1px solid #3498db;
+        margin - bottom: 20px;
+    }
+
+    .form - control {
+        border - radius: 0.3rem;
+        border: 1px solid #d1d1d1;
+        padding: 10px;
+        font - size: 14px;
+        transition: border - color 0.3s ease -in -out, box - shadow 0.3s ease -in -out;
+    }
+
+    .form - control:focus {
+        border - color: #3498db;
+        box - shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+    }
+
+    .btn - primary {
+        background - color: #3498db;
+        border - color: #3498db;
+        font - weight: bold;
+        padding: 10px 20px;
+        border - radius: 0.3rem;
+        transition: background - color 0.3s, border - color 0.3s;
+    }
+
+    .btn - primary:hover {
+        background - color: #2980b9;
+        border - color: #2980b9;
+    }
+
+    a.asp - action {
+        color: #3498db;
+        font - weight: bold;
+        text - decoration: none;
+        transition: color 0.3s;
+    }
+
+    a.asp - action:hover {
+        color: #2980b9;
+        text - decoration: underline;
+    }
+
+    .text - danger {
+        font - size: 13px;
+        margin - top: 5px;
+    }
+
+    .form - group {
+        margin - bottom: 20px;
+    }
+
+
+</style>
+
+<h4>Update Fish</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdateFish" method="post">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Dimension" class="control-label"></label>
+                <input asp-for="Dimension" class="form-control" />
+                <span asp-validation-for="Dimension" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PondImage" class="control-label"></label>
+                <input type="file" class="form-control" asp-for="PondImage" />
+                <span asp-validation-for="PondImage" class="text-danger"></span>
+            </div>
+          
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="AllPond">Back to List</a>
+</div>

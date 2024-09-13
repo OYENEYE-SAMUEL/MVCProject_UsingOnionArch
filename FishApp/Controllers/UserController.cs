@@ -41,21 +41,30 @@ namespace FishApp.Controllers
                 new Claim(ClaimTypes.Email, response.Value.Email),
                 new Claim(ClaimTypes.Name, response.Value.FullName),
             };
+            foreach (var role in response.Value.UserRoles)
+            {
+               // claims.Add(new Claim(ClaimTypes.Role, role.ToString()));
+                claims.Add(new Claim(ClaimTypes.Role, role.Name));
+            }
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var pricipal = new ClaimsPrincipal(identity);
             var properties = new AuthenticationProperties();
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, pricipal, properties);
-            if (response.Value.UserRoles.Any(ur => ur.Role.Name == "Admin"))
+            if (response.Value.UserRoles.Select(ur => ur.Name).Contains("Admin"))
             {
                 return RedirectToAction("DashBoard");
             }
-            if (response.Value.UserRoles.Any(ur => ur.Role.Name == "Customer"))
+            //if (response.Value.UserRoles.Any(ur => ur.Name == "Admin"))
+            //{
+            //    return RedirectToAction("DashBoard");
+            //}
+            if (response.Value.UserRoles.Any(ur => ur.Name == "Customer"))
             {
                 return RedirectToAction("DashBoard");
             }
-            if (response.Value.UserRoles.Any(ur => ur.Role.Name == "Manager"))
+            if (response.Value.UserRoles.Any(ur => ur.Name == "Manager"))
             {
                 return RedirectToAction("DashBoard");
             }
@@ -70,16 +79,12 @@ namespace FishApp.Controllers
             return RedirectToAction("Login");
         }
 
-        /*public IActionResult DashBoard()
+        [HttpGet]
+        public IActionResult DashBoard()
         {
-            var response = _currentUser.GetCurrentUser();
-            if (response.)
-            {
-                
-            }
             return View();
-        }*/
+        }
 
-       
-      }
+
+    }
 }

@@ -1,7 +1,156 @@
-﻿@model Application.DTO.FishRequestModel
+﻿@using Domain.Enum
+@model Application.DTO.FishRequestModel
 
 
+@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+<style>
+    .container {
+        margin-top: 50px;
+        background-color: #ffffff;
+    }
+
+    .card {
+        border-radius: 30px;
+        border: 5px solid red;
+        background-color: #007bff;
+    }
+
+    h3 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #ffffff;
+    }
+
+    .form-control {
+        border-radius: 0.25rem;
+        border-color: #ced4da;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        font-weight: 600;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #545b62;
+            border-color: #0056b3;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        font-weight: 600;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+    .text-danger {
+        font-size: 0.875rem;
+        color: red;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    }
+
+</style>
 <div class="container d-flex align-items-center justify-content-center">
+    <div class="card p-4 shadow-sm w-100" style="max-width: 650px;">
+        <h3 class="text-center mb-4">Create Fish</h3>
+        <form asp-action="CreateFish" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Name</label>
+                <input type="text" class="form-control" placeholder="Enter fish's name" asp-for="Name" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Period" class="form-label">Period</label>
+                <input type="text" class="form-control" placeholder="Enter fish's period" asp-for="Period" required />
+                <span asp-validation-for="Period" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Price" class="form-label">Price</label>
+                <input type="text" class="form-control" placeholder="Enter the price" asp-for="Price" required />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Quantity" class="form-label">Quantity</label>
+                <input type="text" class="form-control" placeholder="Enter the quantity" asp-for="Quantity" required />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="FishImage" class="form-label">Fish Image</label>
+                <input type="file" class="form-control" asp-for="FishImage" required />
+                <span asp-validation-for="FishImage" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PondId" class="form-label">Ponds</label>
+                <select asp-for="PondId" class="form-control" asp-items="ViewBag.allPond" required>
+                    <option value="0">Select pond</option>
+                </select>
+                <span asp-validation-for="PondId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="CategoryType" class="form-label">Category Type</label>
+                <select class="form-control" asp-for="CategoryType" asp-items="Html.GetEnumSelectList<CategoryType>()">
+                    <option value="">Select category</option>
+                </select>
+                <span asp-validation-for="CategoryType" class="text-danger"></span>
+            </div>
+            <div class="d-grid">
+                <input type="submit" value="Create Fish" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="AllFish" class="btn btn-secondary mt-3">Back to List</a>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <div class="container d-flex align-items-center justify-content-center">
     <div class="card p-4 shadow-sm w-100" style="max-width: 650px;">
         <h3 class="text-center mb-4">Create Category</h3>
         <form asp-action="CreateFish">
@@ -23,16 +172,19 @@
                 <input type="text" class="form-control" placeholder="Enter the quantity" asp-for="Quantity" required />
             </div>
             <div class="mb-3">
-                <label asp-for="FishPonds" class="form-label">Ponds</label>
-                <select asp-for="FishPonds" class="form-control" asp-items="ViewBag.allPond" required>
-                    <option value="0">-- Select pond --</option>
-                    <span asp-validation-for="FishPonds" style="color: red"></span>
+                <label asp-for="FishImage" class="form-label">Fish Image</label>
+                <input type="file" class="form-control" placeholder="upload fish's image" asp-for="FishImage" required />
+            </div>
+            <div class="mb-3">
+                <label asp-for="PondId" class="form-label">Ponds</label>
+                <select asp-for="PondId" class="form-control" asp-items="ViewBag.allPond" required>
+                    <option value="0">Select pond</option>
                 </select>
             </div>
 
             <div class="mb-3">
                 <label asp-for="CategoryType" class="form-label">Category Type</label>
-                <select class="form-control" asp-for="CategoryType" asp-items="Html.GetEnumSelectList<Domain.Enum.CategoryType>()">
+                <select class="form-control" asp-for="CategoryType" asp-items="Html.GetEnumSelectList<CategoryType>()">
                     <option value="">select category</option>
                 </select>
             </div>
@@ -54,4 +206,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-
+ *@

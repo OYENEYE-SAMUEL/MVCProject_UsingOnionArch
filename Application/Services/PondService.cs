@@ -17,16 +17,21 @@ namespace Application.Services
         private readonly IFishRepository _fishRepo;
         private readonly ICurrentUser _currentUser;
         private readonly IUnitOfWork _unitOfWork;
-        public PondService(IPondRepository pondRepo, IFishRepository fishRepo, ICurrentUser currentUser, IUnitOfWork unitOfWork)
+        private readonly IFishPondRepository _fishPondRepo;
+        private readonly IFileUploadRepository _file;
+        public PondService(IPondRepository pondRepo, IFishRepository fishRepo, ICurrentUser currentUser, IUnitOfWork unitOfWork, IFishPondRepository fishPondRepo, IFileUploadRepository file)
         {
             _fishRepo = fishRepo;
             _pondRepo = pondRepo;
             _currentUser = currentUser;
             _unitOfWork = unitOfWork;
+            _fishPondRepo = fishPondRepo;
+            _file = file;
         }
         public Response<PondResponseModel> Create(PondRequestModel model)
         {
             var exists = _pondRepo.Check(model.Name);
+
             if (exists)
             {
                 return new Response<PondResponseModel>
@@ -51,8 +56,18 @@ namespace Application.Services
                 PondSize = totalDim,
                 Dimension = model.Dimension,
                 CreatedBy = _currentUser.GetCurrentUser(),
+                PondImage = _file.UploadFile(model.PondImage),
+                SpaceRemain = totalDim, 
                 
             };
+/*
+            var fishPond = new FishPond
+            {
+                Pond = pond,
+                PondId = pond.Id,
+                 
+            };
+            _fishPondRepo.Create(fishPond);*/
             _pondRepo.Create(pond);
             _unitOfWork.Save();
 
@@ -66,7 +81,8 @@ namespace Application.Services
                     Description = pond.Description,
                     PondSize = pond.PondSize,
                     Dimension = pond.Dimension,
-                    SpaceRemain = pond.PondSize,
+                    SpaceRemain = pond.SpaceRemain,
+                    PondImage = pond.PondImage,
                     FishPonds = pond.FishPonds.Select(e => new FishPond { Fish = e.Fish }).ToList()
                 }
             };
@@ -77,12 +93,14 @@ namespace Application.Services
             var ponds = _pondRepo.GetAll();
             var listOfPond = ponds.Select(p => new PondResponseModel
             {
+                Id = p.Id,
                 Name = p.Name,
                 Description = p.Description,
                 PondSize = p.PondSize,
                 Dimension = p.Dimension,
                 SpaceRemain = p.SpaceRemain,
                 CreatedBy = p.CreatedBy,
+                PondImage = p.PondImage,
                  FishPonds = p.FishPonds.Select(e => new FishPond
                  {
                      Fish = e.Fish,
@@ -113,12 +131,14 @@ namespace Application.Services
                 Status = true,
                 Value = new PondResponseModel
                 {
+                    Id = pond.Id,
                     Name = pond.Name,
                     Description = pond.Description,
                     PondSize = pond.PondSize,
                     Dimension = pond.Dimension,
                     SpaceRemain = pond.SpaceRemain,
                     CreatedBy = pond.CreatedBy,
+                    PondImage = pond.PondImage,
                     FishPonds = pond.FishPonds.Select(e => new FishPond
                     {
                         Fish = e.Fish
@@ -152,6 +172,7 @@ namespace Application.Services
                     Dimension = pond.Dimension,
                     SpaceRemain = pond.SpaceRemain,
                     CreatedBy = pond.CreatedBy,
+                    PondImage = pond.PondImage,
                     FishPonds = pond.FishPonds.Select(e => new FishPond
                     {
                         Fish = e.Fish
@@ -179,13 +200,16 @@ namespace Application.Services
             pond.Name = model.Name;
             pond.Description = model.Description;
             pond.Dimension = model.Dimension;
+            pond.PondImage = _file.UploadFile(model.PondImage);
             _pondRepo.Update(pond);
+            _unitOfWork.Save();
             return new Response<PondResponseModel>
             {
                 Message = "Updated successfully",
                 Status = true,
                 Value = new PondResponseModel
                 {
+                    Id = pond.Id,
                     Name = pond.Name,
                     Description = pond.Description,
                     Dimension = pond.Dimension,
@@ -193,6 +217,7 @@ namespace Application.Services
                     PondSize = pond.PondSize,
                     CreatedBy = pond.CreatedBy,
                     DateCreated = pond.DateCreated,
+                    PondImage = pond.PondImage,
                     FishPonds = pond.FishPonds.Select(e => new FishPond
                     {
                         Fish = e.Fish

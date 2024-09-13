@@ -1,8 +1,110 @@
-﻿@model OrderResponseModel
+﻿@model Application.DTO.OrderResponseModel
 
-<h2>Order Approved</h2>
 
-<p>Order ID: @Model.Id</p>
+<style>
+    /* Container styling */
+    .order-details-container {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* General text styling */
+    .order-details-container p {
+        font-family: 'Arial', sans-serif;
+        font-size: 16px;
+        margin: 10px 0;
+        line-height: 1.6;
+    }
+
+    /* Headings */
+    .order-details-container h2 {
+        color: #28a745;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Order information styling */
+    .order-details-container p strong {
+        color: #007bff;
+    }
+
+    /* Success message styling */
+    .success-message {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 16px;
+        text-align: center;
+        margin-top: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Back button styling */
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        text-align: center;
+        width: 100%;
+        max-width: 200px;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+</style>
+
+<div class="order-details-container">
+    <h2>Order Approved</h2>
+
+    <p><strong>Customer:</strong> @Model.CreatedBy</p>
+    <p><strong>Total Price:</strong> @Model.TotalPrice</p>
+    <p><strong>Date Ordered:</strong> @Model.DateOrder</p>
+    <p><strong>Status:</strong> @Model.OrderStatus</p>
+
+    <div class="success-message">
+        The order has been successfully approved.
+    </div>
+
+    <a href="@Url.Action("GetPendingOrders", "Manager")" class="btn btn-secondary">Back to Pending Orders</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+@* <h2>Order Approved</h2>
+
+
 <p>Customer: @Model.CreatedBy</p>
 <p>Total Price: @Model.TotalPrice</p>
 <p>Date Ordered: @Model.DateOrder</p>
@@ -10,5 +112,5 @@
 
 <p>The order has been successfully approved.</p>
 
-<a href="@Url.Action("GetPendingOrders", "Orders")" class="btn btn-secondary">Back to Pending Orders</a>
-
+<a href="@Url.Action("GetPendingOrders", "Manager")" class="btn btn-secondary">Back to Pending Orders</a>
+ *@

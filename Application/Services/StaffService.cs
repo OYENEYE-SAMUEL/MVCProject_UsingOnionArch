@@ -39,29 +39,31 @@ namespace Application.Services
                 };
             }
 
+            var salt = BCrypt.Net.BCrypt.GenerateSalt(20);
+            var hashPassword = BCrypt.Net.BCrypt.HashPassword(model.Password, salt).ToString();
             var user = new User()
             {
                 Email = model.Email,
-                Password = model.Password,
-                ConfirmedPassword = model.ConfirmedPassword,
+                Password = hashPassword,
+                ConfirmedPassword = hashPassword,
                 FullName = $"{model.FirstName} {model.LastName}",
             };
 
-            /*var role = _roleRepo.Get("Manager");
-            if (role == null)
+            var role = _roleRepo.Get("Manager");
+            /*if (role == null)
             {*/
-                Role newRole = new Role()
-                {
-                    Name = "Manager",
-                    CreatedBy = model.Email,
+                /*  Role newRole = new Role()
+                  {
+                      Name = "Manager",
+                      CreatedBy = model.Email,
 
-                };
+                  };*/
 
                 user.UserRoles.Add(new UserRole
                 {
                     User = user,
-                    RoleId = newRole.Id,
-                    Role = newRole,
+                    RoleId = role.Id,
+                    Role = role,
                     UserId = user.Id
                 });
                 
@@ -91,7 +93,7 @@ namespace Application.Services
                 CreatedBy = _currentUser.GetCurrentUser(),
             };
             _userRespo.Create(user);
-            _roleRepo.Create(newRole);
+            //_roleRepo.Create(role);
             _staffRepo.Create(staff);
             _unitOfWork.Save();
 

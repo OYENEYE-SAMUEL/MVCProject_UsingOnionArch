@@ -1,39 +1,262 @@
-﻿@model Application.DTO.FishReponseModel
+﻿
+@model Application.DTO.FishReponseModel
+
+<style>
+    .header-title {
+        color: #28a745;
+        font-family: 'Arial', sans-serif;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .detail-section {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .fish-image-container {
+        margin-bottom: 20px;
+    }
+
+    .fish-image-container img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid #28a745;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .detail-item {
+        margin-bottom: 10px;
+        font-family: 'Verdana', sans-serif;
+        font-size: 16px;
+        text-align: left;
+    }
+
+        .detail-item strong {
+            color: #007bff;
+            font-weight: 600;
+        }
+
+    .pond-list {
+        list-style-type: square;
+        padding-left: 20px;
+        color: #495057;
+        text-align: left;
+    }
+
+        .pond-list li {
+            margin-bottom: 5px;
+            font-family: 'Verdana', sans-serif;
+            font-size: 15px;
+        }
+
+    .alert-warning {
+        background-color: #ffc107;
+        color: #856404;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+        max-width: 600px;
+        margin: 20px auto;
+        font-family: 'Verdana', sans-serif;
+    }
+
+    .detail-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .fish-details {
+        width: 100%;
+    }
+</style>
+
 @{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
     ViewData["Title"] = "Get Fish";
 }
 
 @if (Model != null)
 {
-    <h2>Fish's Details</h2>
-    <div>
-        <strong>Name:</strong> @Model.Name
-    </div>
-    <div>
-        <strong>Description:</strong> @Model.Price
-    </div>
-    <div>
-        <strong>Pond Size:</strong> @Model.Period
-    </div>
-    <div>
-        <strong>Space Remain:</strong> @Model.CategoryType
-    </div>
-    <div>
-        <strong>Dimension:</strong> @Model.Quantity
-    </div>
+    <h2 class="header-title">Fish's Details</h2>
+    <div class="detail-section">
+        <div class="detail-wrapper">
+            <!-- Fish Image -->
+            <div class="fish-image-container">
+                <img src="~/Uploads/@Model.FishImage" alt="Fish Image" />
+            </div>
 
-    <div>
-        <strong>Dimension:</strong> @Model.CreatedBy
-    </div>
-
-    <div>
-        <strong>Dimension:</strong> @Model.DateCreated
+            <!-- Fish Details -->
+            <div class="fish-details">
+                <div class="detail-item">
+                    <strong>Name:</strong> @Model.Name
+                </div>
+                <div class="detail-item">
+                    <strong>Price:</strong> @Model.Price
+                </div>
+                <div class="detail-item">
+                    <strong>Period:</strong> @Model.Period
+                </div>
+                <div class="detail-item">
+                    <strong>Category Type:</strong> @Model.CategoryType
+                </div>
+                <div class="detail-item">
+                    <strong>Quantity:</strong> @Model.Quantity
+                </div>
+                <div class="detail-item">
+                    <strong>Created By:</strong> @Model.CreatedBy
+                </div>
+                <div class="detail-item">
+                    <strong>Pond Contain:</strong>
+                    <ul class="pond-list">
+                        @foreach (var fishPond in Model.FishPonds)
+                        {
+                            <li>@fishPond.Pond.Name</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 }
 else
 {
-    <div>
+    <div class="alert alert-warning">
         <strong>No pond is found.</strong>
     </div>
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @model Application.DTO.FishReponseModel
+
+<style>
+    .header-title {
+        color: #28a745;
+        font-family: 'Arial', sans-serif;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .detail-section {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .detail-item {
+        margin-bottom: 15px;
+        font-family: 'Verdana', sans-serif;
+        font-size: 16px;
+    }
+
+        .detail-item strong {
+            color: #007bff;
+            font-weight: 600;
+        }
+
+    .pond-list {
+        list-style-type: square;
+        padding-left: 20px;
+        color: #495057;
+    }
+
+        .pond-list li {
+            margin-bottom: 5px;
+            font-family: 'Verdana', sans-serif;
+            font-size: 15px;
+        }
+
+    .alert-warning {
+        background-color: #ffc107;
+        color: #856404;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+        max-width: 600px;
+        margin: 20px auto;
+        font-family: 'Verdana', sans-serif;
+    }
+</style>
+
+
+@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    ViewData["Title"] = "Get Fish";
+}
+
+@if (Model != null)
+{
+    <h2 class="header-title">Fish's Details</h2>
+    <div class="detail-section">
+        <div class="detail-item">
+            <strong>Name:</strong> @Model.Name
+        </div>
+        <div class="detail-item">
+            <strong>Price:</strong> @Model.Price
+        </div>
+        <div class="detail-item">
+            <strong>Period:</strong> @Model.Period
+        </div>
+        <div class="detail-item">
+            <strong>Category Type:</strong> @Model.CategoryType
+        </div>
+        <div class="detail-item">
+            <strong>Quantity:</strong> @Model.Quantity
+        </div>
+        <div class="detail-item">
+            <strong>Created By:</strong> @Model.CreatedBy
+        </div>
+        <div class="detail-item">
+            <strong>Fish Image:</strong>
+            <img src="~/Uploads/@Model.FishImage" alt="Fish Image" />
+        </div>
+       
+        <div class="detail-item">
+            <strong>Pond Contain:</strong>
+            <ul class="pond-list">
+                @foreach (var fishPond in Model.FishPonds)
+                {
+                    <li>@fishPond.Pond.Name</li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        <strong>No pond is found.</strong>
+    </div>
+}
+ *@
+
 

@@ -10,15 +10,22 @@ namespace Application.DTO
 {
     public class OrderRequestModel
     {
-        public Status OrderStatus { get; set; }
-        public ICollection<OrderFishRequestModel> OrderFishItems { get; set; }
-            = new HashSet<OrderFishRequestModel>();
+        public List<OrderItemRequestModel> OrderItems { get; set; }
+            = new List<OrderItemRequestModel>();
     }
 
-    public class OrderFishRequestModel
+    public class OrderItemRequestModel
     {
         public string Key { get; set; } = default!;
         public int Value { get; set; } = default!;
+    }
+
+    public class OrderItemResponseModel
+    {
+        public Guid Id { get; set; }
+        public string Key { get; set; } = default!;
+        public int Value { get; set; } = default!;
+        public Guid OrderId { get; set; }
     }
 
     public class OrderResponseModel
@@ -28,20 +35,15 @@ namespace Application.DTO
         public decimal TotalPrice { get; set; }
         public DateTime DateOrder { get; set; }
         public Guid CustomerId { get; set; }
-        public Customer Customer { get; set; } = default!;
         public string? CreatedBy { get; set; }
+         public Staff? Staff { get; set; }
         public bool IsDeleted { get; set; }
-        public ICollection<OrderFishResponseModel> OrderFishItems { get; set; }
-            = new HashSet<OrderFishResponseModel>();
+        public ICollection<OrderItemResponseModel>? OrderItems { get; set; }
+            
+        public ICollection<OrderFish> OrderFishes { get; set; } = new HashSet<OrderFish>();
     }
 
-    public class OrderFishResponseModel
-    {
-        public Guid Id { get; set; }
-        public string Key { get; set; } = default!;
-        public int Value { get; set; } = default!;
-        public Guid OrderId { get; set; }
-    }
+   
 }
     
 

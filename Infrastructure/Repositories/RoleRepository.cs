@@ -24,7 +24,7 @@ namespace Infrastructure.Repositories
 
         public Role Create(Role role)
         {
-            var part = _fishContext.Roles.Add(role);
+            _fishContext.Roles.Add(role);
             return role;
         }
 

@@ -1,0 +1,142 @@
+﻿<div class="header_section">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="logo"><a href="index.html"><img src="images/logo.png"></a></div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shop.html">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <div class="search_icon">
+                        <ul>
+                            <li><a asp-area="" asp-controller="User" asp-action="Login"><img src="~/Template/images/search-icon.png"></a></li>
+                            <li><a asp-area="" asp-controller="User" asp-action="Login">LOGIN</a></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </nav>
+    </div>
+    <!-- banner section start -->
+    <div class="banner_section layout_padding">
+        <div class="container">
+            <div id="costum_slider" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <h1 class="furniture_text">HI-SPEED AQUACULTURES</h1>
+                        <p class="there_text">Fresh Catfish: Taste the Difference, Savor the Benefits!"</p>
+                        <div class="contact_bt_main">
+                            <div class="contact_bt"><a asp-area="" asp-controller="Customer" asp-action="RegisterCustomer">Sign Up</a></div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <h1 class="furniture_text">HI-SPEED AQUACULTURES</h1>
+                        <p class="there_text">Fresh Catfish: Taste the Difference, Savor the Benefits!"</p>
+                        <div class="contact_bt_main">
+                            <div class="contact_bt"><a href="contact.html">Sign Up</a></div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <h1 class="furniture_text">HI-SPEED AQUACULTURES</h1>
+                        <p class="there_text">Fresh Catfish: Taste the Difference, Savor the Benefits!"</p>
+                        <div class="contact_bt_main">
+                            <div class="contact_bt"><a asp-area="" asp-controller="Customer" asp-action="RegisterCustomer">Sign Up</a></div>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#costum_slider" role="button" data-slide="prev">
+                    <i class=""><img src="images/left-arrow.png"></i>
+                </a>
+                <a class="carousel-control-next" href="#costum_slider" role="button" data-slide="next">
+                    <i class=""><img src="images/right-arrow.png"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- banner section end -->
+</div>
+
+
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+
+
+
+<div class="footer_section layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-sm-6">
+                <h1 class="customer_text">INFORMATION</h1>
+                <p class="footer_lorem_text">
+                    Superior Flavor and Texture:
+                    Fresh catfish have a natural taste and
+                    firm texture that frozen fish often lack.
+                    Freezing can cause moisture loss,
+                    affecting the fish's overall quality.
+                </p>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <h1 class="customer_text">LET US HELP YOU</h1>
+                <p class="footer_lorem_text">
+                    Nutritional Value:
+                    Fresh catfish retain more nutrients,
+                    including essential omega-3 fatty acids,
+                    which are crucial for heart health.
+                    Freezing can degrade some of these vital nutrients.
+                </p>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <h1 class="customer_text">UseFul Links</h1>
+                <p class="footer_lorem_text1">
+                    About Us<br>
+                    Careers<br>
+                    Sell on shopee<br>
+                    Press & News<br>
+                    Competitions<br>
+                    Terms & Conditions
+                </p>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <h1 class="customer_text">OUR Design</h1>
+                <p class="footer_lorem_text">
+                    Target Audience:
+                    Seafood lovers
+                    Health-conscious individuals
+                    Food enthusiasts
+                    Environmentally conscious consumers
+                    Tone and Style:
+                    Friendly and informative
+                    Clean and modern design
+                    Use of high-quality images of fresh catfish dishes
+                </p>
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Enter your email" aria-label="Enter your email" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2"><a href="#">Subscribe</a></span>
+            </div>
+        </div>
+    </div>
+</div>
+

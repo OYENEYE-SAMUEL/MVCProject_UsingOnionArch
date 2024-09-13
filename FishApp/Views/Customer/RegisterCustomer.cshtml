@@ -1,29 +1,314 @@
-﻿@model Application.DTO.CustomerRequestModel
+﻿@using Domain.Enum
+@model Application.DTO.CustomerRequestModel
 
 
-<div class="container d-flex align-items-center justify-content-center">
-    <div class="card p-4 shadow-sm w-100" style="max-width: 650px;">
-        <h3 class="text-center mb-4">Register</h3>
-        <form asp-action="RegisterCustomer" method="post">
-            <div class="mb-3">
-                <label asp-for="Email" class="form-label">Email</label>
-                <input type="email" class="form-control" placeholder="Enter your email" asp-for="Email" />
-            </div>
-            <div class="mb-3">
-                <label asp-for="Password" class="form-label">Password</label>
-                <input type="password" class="form-control" placeholder="Enter your password" asp-for="Password" />
-            </div>
-            <div class="mb-3">
-                <label asp-for="ConfirmedPassword" class="form-label">Password</label>
-                <input type="password" class="form-control" placeholder="cunfirm your password" asp-for="ConfirmedPassword" />
-            </div>
-            <div class="mb-3">
-                <label asp-for="FirstName" class="form-label">First Name</label>
-                <input type="text" class="form-control" placeholder="Enter your first name" asp-for="FirstName" />
-            </div>
-            <div class="mb-3">
-                <label asp-for="LastName" class="form-label">Last Name</label>
-                <input type="text" class="form-control" placeholder="Enter your last name" asp-for="LastName" />
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Registration Form</title>
+
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .card h3 {
+            color: #007bff;
+            font-size: 26px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            padding: 12px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .form-control::placeholder {
+            color: #6c757d;
+        }
+
+        .form-control:focus {
+            border-color: #0056b3;
+            outline: none;
+        }
+
+        .text-danger {
+            color: red;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            font-size: 18px;
+            padding: 12px;
+            border-radius: 5px;
+            color: white;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .d-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        select.form-control {
+            padding: 12px;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <h3>Customer Registration</h3>
+
+            <!-- Validation Summary -->
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <form asp-action="RegisterCustomer" method="post">
+                <div class="form-group">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input type="email" class="form-control" placeholder="Enter your email" asp-for="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <input type="password" class="form-control" placeholder="Enter your password" asp-for="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ConfirmedPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" placeholder="Confirm your password" asp-for="ConfirmedPassword" />
+                    <span asp-validation-for="ConfirmedPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="FirstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" placeholder="Enter your first name" asp-for="FirstName" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="LastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" placeholder="Enter your last name" asp-for="LastName" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Gender" class="form-label">Gender</label>
+                    <select class="form-control" asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()">
+                        <option value="">Select Gender</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Address" class="form-label">Home Address</label>
+                    <input type="text" class="form-control" placeholder="Enter your address" asp-for="Address" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="form-label">Phone No</label>
+                    <input type="tel" class="form-control" placeholder="Enter your phone number" asp-for="PhoneNumber" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="d-grid">
+                    <input type="submit" value="Register" class="btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@{
+    Layout = null;
+}
+
+@* <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Registration Form</title>
+
+    <style>
+        body {
+            background-color: #f2f5f9;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 650px;
+        }
+
+            .card h3 {
+                color: #007bff;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+        .form-label {
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .form-control {
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+            .form-control::placeholder {
+                color: #6c757d;
+                opacity: 1;
+            }
+
+            .form-control:focus {
+                border-color: #0056b3;
+                box-shadow: none;
+            }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+
+        .d-grid {
+            display: grid;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container d-flex align-items-center justify-content-center">
+        <div class="card p-4 shadow-sm w-100">
+            <h3 class="text-center mb-4">Register</h3>
+            <form asp-action="RegisterCustomer" method="post">
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input type="email" class="form-control" placeholder="Enter your email" asp-for="Email" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <input type="password" class="form-control" placeholder="Enter your password" asp-for="Password" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ConfirmedPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" placeholder="Confirm your password" asp-for="ConfirmedPassword" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="FirstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" placeholder="Enter your first name" asp-for="FirstName" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="LastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" placeholder="Enter your last name" asp-for="LastName" />
+                </div>
                 <div class="mb-3">
                     <label asp-for="Gender" class="form-label">Gender</label>
                     <select class="form-control" asp-for="Gender" asp-items="Html.GetEnumSelectList<Domain.Enum.Gender>()">
@@ -38,22 +323,30 @@
                     <label asp-for="PhoneNumber" class="form-label">Phone No</label>
                     <input type="tel" class="form-control" placeholder="Enter your phone number" asp-for="PhoneNumber" />
                 </div>
-
                 <div class="d-grid">
                     <input type="submit" value="Register" class="btn btn-primary" />
                 </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
-
-
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
     }
-}
+</body>
+
+</html> *@
+
+
+
+
+
+
+
+
+
 
 
 

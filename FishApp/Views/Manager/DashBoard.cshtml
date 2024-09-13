@@ -1,16 +1,366 @@
-﻿
-<table>
-    <tbody>
-        <tr>
-            <td><a asp-controller="Manager" asp-action="CreatePond" class="btn btn-secondary">Create Pond</a></td>
-            <td><a asp-controller="Manager" asp-action="CreateFish" class="btn btn-secondary">Create Fish</a></td>
-            <td><a asp-controller="Manager" asp-action="AllCategories" class="btn btn-secondary">All Categories</a></td>
-            <td><a asp-controller="Manager" asp-action="AllCustomers" class="btn btn-secondary">All Customers</a></td>
-            <td><a asp-controller="Manager" asp-action="AllOrders" class="btn btn-secondary">All Orders</a></td>
-            <td><a asp-controller="Manager" asp-action="AllPonds" class="btn btn-secondary">All Ponds</a></td>
-            
-        </tr>
-    </tbody>
-</table>
+﻿@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
 
 
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - FishApp</title>
+  
+    @* <link rel="stylesheet" href="@Url.Content("~/css/manager.css")"> *@
+    <style>
+        /* General styling for the body */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f4f8; /* Softer background */
+}
+
+/* Dashboard container styling */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 250px;
+    background-color: #34495e;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #fff;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-header {
+    text-align: center;
+    font-size: 1.8em;
+    padding: 15px;
+    background-color: #1abc9c; /* Bright header */
+    color: #fff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+    padding: 12px 20px;
+    text-align: left;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #ecf0f1;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+}
+
+.sidebar ul li:hover {
+    background-color: #1abc9c; /* Highlight the sidebar option on hover */
+    border-radius: 5px;
+}
+
+.sidebar ul li a:hover {
+    color: #2c3e50; /* Text color change on hover */
+}
+
+/* Dashboard Cards */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 20px;
+    padding: 20px;
+    background-color: #ecf0f1;
+}
+
+.card {
+    background-color: #3498db; /* Primary card color */
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card a {
+    color: white;
+    font-size: 1.2em;
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.card:hover {
+    transform: translateY(-10px); /* Lift effect on hover */
+    background-color: #2980b9; /* Slightly darker color on hover */
+}
+
+/* Main content styling */
+.main-content {
+    flex-grow: 1;
+    background-color: #fff;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+main header h1 {
+    font-size: 2.2em;
+    color: #34495e;
+    margin: 0;
+    font-weight: bold;
+}
+
+section p {
+    font-size: 1.2em;
+    color: #7f8c8d;
+}
+
+/* Responsive design */
+media screen and (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+    }
+
+    .main-content {
+        padding: 10px;
+    }
+}
+
+    </style>
+</head>
+
+<body>
+
+      <!-- Dashboard Cards -->
+    <div class="dashboard-cards">
+        <div class="card">
+            <a asp-controller="Manager" asp-action="CreatePond">Create Pond</a>
+        </div>
+        <div class="card">
+            <a asp-controller="Manager" asp-action="CreateFish">Create Fish</a>
+        </div>
+        <div class="card">
+            <a asp-controller="Manager" asp-action="AllFish">All Fish</a>
+        </div>
+        <div class="card">
+            <a asp-controller="Manager" asp-action="AllCustomers">All Customers</a>
+        </div>
+        <div class="card">
+            <a asp-controller="Manager" asp-action="GetPendingOrders">All Orders</a>
+        </div>
+        <div class="card">
+            <a asp-controller="Manager" asp-action="AllPonds">All Ponds</a>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - FishApp</title>
+    <link rel="stylesheet" href="@Url.Content("~/css/manager.css")">
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <ul>
+            <li><a asp-controller="Manager" asp-action="CreatePond">Create Pond</a></li>
+            <li><a asp-controller="Manager" asp-action="CreateFish">Create Fish</a></li>
+            <li><a asp-controller="Manager" asp-action="AllFish">All Fish</a></li>
+            <li><a asp-controller="Manager" asp-action="AllCustomers">All Customers</a></li>
+            <li><a asp-controller="Manager" asp-action="GetPendingOrders">All Orders</a></li>
+            <li><a asp-controller="Manager" asp-action="AllPonds">All Ponds</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="dashboard-container">
+        <div class="dashboard-option">
+            <h3>Create Pond</h3>
+            <p>Manage and create new ponds for fish farming.</p>
+        </div>
+
+        <div class="dashboard-option">
+            <h3>Create Fish</h3>
+            <p>Add new fish species for customers to order.</p>
+        </div>
+
+        <div class="dashboard-option">
+            <h3>All Fish</h3>
+            <p>View and manage all available fish species.</p>
+        </div>
+
+        <div class="dashboard-option">
+            <h3>All Customers</h3>
+            <p>Manage customer information and their orders.</p>
+        </div>
+
+        <div class="dashboard-option">
+            <h3>All Orders</h3>
+            <p>View all pending and completed customer orders.</p>
+        </div>
+
+        <div class="dashboard-option">
+            <h3>All Ponds</h3>
+            <p>View and manage all existing ponds.</p>
+        </div>
+    </div>
+</body>
+</html> *@
+
+
+
+
+
+
+
+
+
+@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - FishApp</title>
+    
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <ul>
+                <li><a asp-controller="Manager" asp-action="CreatePond">Create Pond</a></li>
+                <li><a asp-controller="Manager" asp-action="CreateFish">Create Fish</a></li>
+                <li><a asp-controller="Manager" asp-action="AllFish">All Fish</a></li>
+                <li><a asp-controller="Manager" asp-action="AllCustomers">All Customers</a></li>
+                <li><a asp-controller="Manager" asp-action="GetPendingOrders">All Orders</a></li>
+                <li><a asp-controller="Manager" asp-action="AllPonds">All Ponds</a></li>
+            </ul>
+        </nav>
+       
+    </div>
+
+   </body>
+</html> *@
+
+
+
+@* <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 220px;
+            background-color: #2c3e50;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+            .sidebar ul {
+                list-style-type: none;
+                padding: 0;
+                margin-top: 30px;
+            }
+
+                .sidebar ul li {
+                    margin-bottom: 15px;
+                }
+
+                    .sidebar ul li a {
+                        color: #ecf0f1;
+                        text-decoration: none;
+                        font-size: 16px;
+                        display: block;
+                        padding: 10px 15px;
+                        border-radius: 4px;
+                        transition: background-color 0.3s, color 0.3s;
+                    }
+
+                        .sidebar ul li a:hover {
+                            background-color: #34495e;
+                            color: #ffffff;
+                        }
+
+        .dashboard-container {
+            display: flex;
+            flex: 1;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #ecf0f1;
+        }
+
+        .navbar {
+            background-color: #2980b9;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 2px solid #2980b9;
+        }
+
+            .navbar h2 {
+                margin: 0;
+                font-size: 20px;
+                font-weight: normal;
+            }
+    </style>
+    *@

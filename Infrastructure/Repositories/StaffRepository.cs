@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace Infrastructure.Repositories
 
         public Staff Create(Staff staff)
         {
-            var employ = _fishContext.Staffs.Add(staff);
+            _fishContext.Staffs.Add(staff);
             return staff;
         }
 
@@ -37,12 +38,19 @@ namespace Infrastructure.Repositories
             return staffs;
         }
 
+        public Staff GetBy(Expression<Func<Staff, bool>> expression)
+        {
+            var staff = _fishContext.Staffs.FirstOrDefault
+               (s => s.Email == s.Email && s.IsDeleted == false);
+            return staff;
+        }
+
         public Staff GetByEmail(string email)
         {
             var staff  = _fishContext.Staffs.FirstOrDefault
                 (s => s.Email == email && s.IsDeleted == false);
             return staff;
-        }
+        } 
 
         public Staff GetById(Guid id)
         {

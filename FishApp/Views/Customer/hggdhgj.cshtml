@@ -1,0 +1,697 @@
+﻿@* @model Application.DTO.OrderRequestModel
+@{
+    ViewData["Title"] = "Create Order";
+
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+
+} *@
+
+
+@* <form asp-action="MakeOrder" method="post">
+    <div class="form-group">
+        <!-- Hidden input for CustomerId -->
+        <input asp-for="CustomerId" type="hidden" class="form-control" />
+    </div>
+
+    <ul>
+        @for (var i = 0; i < ViewBag.count; i++)
+        {
+            <li>
+                <!-- Dropdown for selecting Fish Type -->
+                <div class="mb-3">
+                    <label asp-for="OrderItems[@i].Key" class="form-label">Fish Type</label>
+                    <select asp-for="OrderItems[@i].Key" class="form-control" asp-items="ViewBag.allFish">
+                        <option value="">-- Select fish type --</option>
+                    </select>
+                </div>
+
+                <!-- Input for Quantity -->
+                <div class="mb-3">
+                    <label asp-for="OrderItems[@i].Value" class="form-label">Quantity</label>
+                    <input asp-for="OrderItems[@i].Value" type="number" class="form-control" placeholder="Enter quantity" />
+                </div>
+            </li>
+        }
+    </ul>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary">Make Order</button>
+</form>
+ *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <form asp-action="MakeOrder" method="post">
+    <div class="form-group">
+        <input asp-for="CustomerId" value="" type="hidden" class="form-control" />
+    </div>
+    <ul>
+        @for (var i = 0; i < ViewBag.count; i++)
+        {
+            <li>
+                <div class="mb-3">
+                    <label asp-for="OrderItems" class="form-label">Fish Type</label>
+                    <select asp-for="OrderItems" class="form-control" name="OrderItems[@i].Key" asp-items="ViewBag.allFish">
+                        <option value="0">-- Select fish type--</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Quantity</label>
+                    <input type="number" class="form-control" placeholder="Quantity" name="OrderItems[@i].Value" />
+                </div>
+
+
+            </li>
+        }
+    </ul>
+    <button type="submit" class="btn btn-primary">Make Order</button>
+</form>
+
+ *@
+
+
+
+
+
+
+@* <style>
+    .fish-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        border: 2px solid #4CAF50;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        transition: transform 0.2s ease;
+    }
+
+        .fish-item:hover {
+            transform: scale(1.02);
+            border-color: #3E8E41;
+        }
+
+    .fish-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #3E8E41;
+    }
+
+    .fish-details {
+        flex-grow: 1;
+        margin-left: 20px;
+    }
+
+    .fish-select {
+        width: 100%;
+        font-size: 16px;
+        padding: 5px;
+        margin-bottom: 10px;
+        border: 2px solid #3E8E41;
+        border-radius: 4px;
+        background-color: #E8F5E9;
+    }
+
+    .fish-price,
+    .fish-quantity {
+        font-size: 14px;
+        color: #2E7D32;
+        margin-bottom: 5px;
+    }
+
+    .fish-quantity-input {
+        width: 80px;
+        border: 2px solid #3E8E41;
+        border-radius: 4px;
+        padding: 5px;
+    }
+
+    .fish-actions {
+        display: flex;
+        align-items: center;
+    }
+
+        .fish-actions .btn {
+            margin-left: 10px;
+            background-color: #d32f2f;
+            color: white;
+            border-radius: 4px;
+        }
+
+            .fish-actions .btn:hover {
+                background-color: #c62828;
+            }
+
+    .btn-success {
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        .btn-success:hover {
+            background-color: #45A049;
+        }
+
+    .btn-primary {
+        background-color: #2196F3;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover {
+            background-color: #1976D2;
+        }
+
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .table-bordered {
+        border: 2px solid #4CAF50;
+    }
+
+</style>
+ *@
+
+
+@* @{
+    if (ViewBag.response != null)
+    {
+        <div class="alert alert-success">
+            @TempData["response"]
+        </div>
+    }
+} *@
+
+@* <form asp-action="MakeOrder" method="post">
+    <h3>Order Fish Items</h3>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Fish Image</th>
+                <th>Details</th>
+                <th>Quantity</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="order-fish-items">
+            <tr>
+                <td colspan="4">
+                    <div class="fish-item">
+                        <div class="fish-details">
+                            <select asp-for="OrderItems" class="form-control fish-select" onchange="updateFishDetails(this)">
+                                @foreach (var fish in ViewBag.allFish as List<SelectListItem>)
+                                {
+                                    <option value="@fish.Value">
+                                        @fish.Text
+                                    </option>
+
+                                    <img id="fish-image-0" src="~/Uploads/@fish.Text" alt="Fish Image" class="fish-image" />
+                                }
+                            </select>
+                            <p id="fish-price-0" class="fish-price">-</p>
+                            <p id="fish-quantity-0" class="fish-quantity">-</p>
+                        </div>
+                        <div class="fish-actions">
+                            <input asp-for="OrderItems" class="form-control fish-quantity-input" name="OrderItems.Value" type="number" min="1" />
+                            <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-success" onclick="addNewRow()">Add Fish Item</button>
+    <button type="submit" class="btn btn-primary">Submit Order</button>
+</form>
+ *@
+@* @section Scripts {
+    <script type="text/javascript">
+        var fishList = @Html.Raw(ViewBag.FishListJson);
+
+        function updateFishDetails(selectElement) {
+            var selectedId = selectElement.value;
+            var selectedFish = fishList.find(fish => fish.Id == selectedId);
+            var row = selectElement.closest('tr');
+            var index = Array.prototype.indexOf.call(document.querySelectorAll('#order-fish-items tr'), row);
+
+            document.getElementById(`fish-image-${index}`).src = selectedFish.ImageUrl;
+            document.getElementById(`fish-price-${index}`).innerText = `Price: #${selectedFish.Price}`;
+            document.getElementById(`fish-quantity-${index}`).innerText = `Available: ${selectedFish.Quantity}`;
+        }
+
+        function addNewRow() {
+            var table = document.getElementById('order-fish-items');
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+
+            var cell = row.insertCell(0);
+            cell.colSpan = 4;
+
+            cell.innerHTML = `
+                                <div class="fish-item">
+                                    <img id="fish-image-${rowCount}" src="~/Uploads/placeholder.png" alt="Fish Image" class="fish-image" />
+                                    <div class="fish-details">
+                                        <select name="OrderItems[${rowCount}].Key" class="form-control fish-select" onchange="updateFishDetails(this)">
+                                            ${fishList.map(fish => `<option value="${fish.Id}">${fish.DisplayText}</option>`).join('')}
+                                        </select>
+                                        <p id="fish-price-${rowCount}" class="fish-price">-</p>
+                                        <p id="fish-quantity-${rowCount}" class="fish-quantity">-</p>
+                                    </div>
+                                    <div class="fish-actions">
+                                        <input name="OrderItems[${rowCount}].Value" class="form-control fish-quantity-input" type="number" min="1" />
+                                        <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>
+                                    </div>
+                                </div>
+                            `;
+
+            updateFishDetails(cell.querySelector('.fish-select'));
+        }
+
+        function removeRow(button) {
+            var row = button.closest('tr');
+            row.parentNode.removeChild(row);
+        }
+    </script>
+} *@
+
+
+
+
+
+
+
+
+
+
+@*
+
+@{
+
+    if (ViewBag.response != null)
+    {
+        <div class="alert alert-success">
+            @TempData["response"]
+        </div>
+    }
+}
+
+ *@
+
+@* <form asp-action="MakeOrder" method="post">
+
+    <h3>Order Fish Items</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Fish</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th>Available Quantity</th>
+                <th>Quantity</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="order-fish-items">
+            <tr>
+                <td>
+                    <select asp-for="OrderItems" class="form-control" name="OrderItems.Key" onchange="updateFishDetails(this)">
+                        @foreach (var fish in ViewBag.allFish as List<SelectListItem>)
+                        {
+                            <option value="@fish.Value">@fish.Text</option>
+                        }
+                    </select>
+                </td>
+                <td><img id="fish-image-0"  src="~/Uploads/IMGimage5b-53.jpeg" alt="Fish Image" style="width: 50px; height: 50px;" /></td>
+                <td id="fish-price-0">-</td>
+                <td id="fish-quantity-0">-</td>
+                <td>
+                    <input asp-for="OrderItems" class="form-control" name="OrderItems.Value" type="number" min="1" />
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-success" onclick="addNewRow()">Add Fish Item</button>
+    <button type="submit" class="btn btn-primary">Submit Order</button>
+</form>
+
+@section Scripts {
+    <script type="text/javascript">
+        var fishList = @Html.Raw(ViewBag.FishListJson);
+
+        function updateFishDetails(selectElement) {
+            var selectedId = selectElement.value;
+            var selectedFish = fishList.find(fish => fish.Id == selectedId);
+            var row = selectElement.closest('tr');
+            var index = row.rowIndex - 1; // Adjust index due to table header
+
+            document.getElementById(`fish-image-${index}`).src = selectedFish.ImageUrl;
+            document.getElementById(`fish-price-${index}`).innerText = `#${selectedFish.Price}`;
+            document.getElementById(`fish-quantity-${index}`).innerText = selectedFish.Quantity;
+        }
+
+        function addNewRow() {
+            var table = document.getElementById('order-fish-items');
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+
+            var cell1 = row.insertCell(0);
+            var selectElement = document.createElement("select");
+            selectElement.name = `OrderItems[${rowCount}].Key`;
+            selectElement.className = "form-control";
+            selectElement.onchange = function () { updateFishDetails(this); };
+
+            fishList.forEach(fish => {
+                var option = document.createElement("option");
+                option.value = fish.Id;
+                option.text = fish.DisplayText;
+                selectElement.add(option);
+            });
+
+            cell1.appendChild(selectElement);
+
+            var cell2 = row.insertCell(1);
+            var imgElement = document.createElement("img");
+            imgElement.id = `fish-image-${rowCount}`;
+            imgElement.style.width = "50px";
+            imgElement.style.height = "50px";
+            cell2.appendChild(imgElement);
+
+            var cell3 = row.insertCell(2);
+            var priceElement = document.createElement("span");
+            priceElement.id = `fish-price-${rowCount}`;
+            cell3.appendChild(priceElement);
+
+            var cell4 = row.insertCell(3);
+            var quantityElement = document.createElement("span");
+            quantityElement.id = `fish-quantity-${rowCount}`;
+            cell4.appendChild(quantityElement);
+
+            var cell5 = row.insertCell(4);
+            var inputElement = document.createElement("input");
+            inputElement.name = `OrderItems[${rowCount}].Value`;
+            inputElement.className = "form-control";
+            inputElement.type = "number";
+            inputElement.min = "1";
+            cell5.appendChild(inputElement);
+
+            var cell6 = row.insertCell(5);
+            var removeButton = document.createElement("button");
+            removeButton.type = "button";
+            removeButton.className = "btn btn-danger";
+            removeButton.onclick = function () { removeRow(this); };
+            removeButton.innerHTML = "Remove";
+            cell6.appendChild(removeButton);
+
+            updateFishDetails(selectElement); // Update with selected fish details
+        }
+
+        function removeRow(button) {
+            var row = button.closest('tr');
+            row.parentNode.removeChild(row);
+        }
+    </script>
+}
+
+ *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @{
+    if (ViewBag.response != null)
+    {
+        <div class="alert alert-success">
+            @TempData["response"]
+        </div>
+    }
+}
+
+<form asp-action="CreateOrder" method="post">
+    <h3>Order Fish Items</h3>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Fish Image</th>
+                <th>Details</th>
+                <th>Quantity</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="order-fish-items">
+            <tr>
+                <td colspan="4">
+                    <div class="fish-item">
+                        <div class="fish-details">
+                            <select asp-for="OrderItems" class="form-control fish-select" name="OrderItems.Key" onchange="updateFishDetails(this)">
+                                @foreach (var fish in ViewBag.allFish as List<SelectListItem>)
+                                {
+                                    <option value="@fish.Value">@fish.Text
+                                    </option>
+
+                                    <img id="fish-image-0" src="~/Uploads/@fish.Text" alt="Fish Image" class="fish-image" />
+                                }
+                            </select>
+                            <p id="fish-price-0" class="fish-price">-</p>
+                            <p id="fish-quantity-0" class="fish-quantity">-</p>
+                        </div>
+                        <div class="fish-actions">
+                            <input asp-for="OrderItems" class="form-control fish-quantity-input" name="OrderItems.Value" type="number" min="1" />
+                            <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-success" onclick="addNewRow()">Add Fish Item</button>
+    <button type="submit" class="btn btn-primary">Submit Order</button>
+</form>
+
+@section Scripts {
+    <script type="text/javascript">
+        var fishList = @Html.Raw(ViewBag.FishListJson);
+
+        function updateFishDetails(selectElement) {
+            var selectedId = selectElement.value;
+            var selectedFish = fishList.find(fish => fish.Id == selectedId);
+            var row = selectElement.closest('tr');
+            var index = Array.prototype.indexOf.call(document.querySelectorAll('#order-fish-items tr'), row);
+
+            document.getElementById(`fish-image-${index}`).src = selectedFish.ImageUrl;
+            document.getElementById(`fish-price-${index}`).innerText = `Price: #${selectedFish.Price}`;
+            document.getElementById(`fish-quantity-${index}`).innerText = `Available: ${selectedFish.Quantity}`;
+        }
+
+        function addNewRow() {
+            var table = document.getElementById('order-fish-items');
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+
+            var cell = row.insertCell(0);
+            cell.colSpan = 4;
+
+            cell.innerHTML = `
+                        <div class="fish-item">
+                            <img id="fish-image-${rowCount}" src="~/Uploads/placeholder.png" alt="Fish Image" class="fish-image" />
+                            <div class="fish-details">
+                                <select name="OrderItems[${rowCount}].Key" class="form-control fish-select" onchange="updateFishDetails(this)">
+                                    ${fishList.map(fish => `<option value="${fish.Id}">${fish.DisplayText}</option>`).join('')}
+                                </select>
+                                <p id="fish-price-${rowCount}" class="fish-price">-</p>
+                                <p id="fish-quantity-${rowCount}" class="fish-quantity">-</p>
+                            </div>
+                            <div class="fish-actions">
+                                <input name="OrderItems[${rowCount}].Value" class="form-control fish-quantity-input" type="number" min="1" />
+                                <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>
+                            </div>
+                        </div>
+                    `;
+
+            updateFishDetails(cell.querySelector('.fish-select'));
+        }
+
+        function removeRow(button) {
+            var row = button.closest('tr');
+            row.parentNode.removeChild(row);
+        }
+    </script>
+} *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*    <form asp-action="CreateOrder" method="post">
+
+        <h3>Order Fish Items</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fish</th>
+                    <th>Quantity</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="order-fish-items">
+                    <tr>
+                        <td>
+                        <select asp-for="OrderItems" class="form-control" name="OrderItems.Key" asp-items="ViewBag.allFish"></select>
+                        </td>
+                        <td>
+                        <input asp-for="OrderItems" class="form-control" name="OrderItems.Value" asp-items="ViewBag.allFish" type="number" min="1" />
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-success" onclick="addNewRow()">Add Fish Item</button>
+        <button type="submit" class="btn btn-primary">Submit Order</button>
+    </form> *@
+
+@* <h2>Create a New Order</h2>
+
+
+
+
+
+@* @section Scripts {
+    <script type="text/javascript">
+        // Deserialize the FishList JSON passed from the ViewBag
+        var fishList = @Html.Raw(ViewBag.FishListJson);
+
+        function addNewRow() {
+            var table = document.getElementById('order-fish-items');
+            var rowCount = table.rows.length; // Number of existing rows
+            var row = table.insertRow(rowCount); // Add a new row at the end
+
+            // Get the value of the select element from the first row
+            var existingSelect = table.rows[0].cells[0].querySelector('select');
+            var selectedValue = existingSelect ? existingSelect.value : ''; // Default value if not found
+
+            console.log(selectedValue);
+
+            // Create the first cell and add a select element with the same value
+            var cell1 = row.insertCell(0);
+            var selectElement = document.createElement("select");
+            selectElement.name = `OrderItems[${rowCount}].Key`; // Adjust the name for the new row
+            selectElement.className = "form-control";
+
+            // Populate the new select element with options
+            var options = existingSelect ? existingSelect.options : [];
+            for (var i = 0; i < options.length; i++) {
+                var option = document.createElement("option");
+                option.value = options[i].value;
+                option.text = options[i].text;
+                selectElement.add(option);
+            }
+
+            // Set the selected value of the new select element
+            selectElement.value = selectedValue;
+
+            // Make the select element readonly using CSS styles
+            selectElement.style.pointerEvents = 'none'; // Disable interactions
+            selectElement.style.opacity = '0.5'; // Make it look disabled
+
+            cell1.appendChild(selectElement);
+
+            // Create the second cell and add an input element
+            var cell2 = row.insertCell(1);
+            var inputElement = document.createElement("input");
+            inputElement.name = `OrderItems[${rowCount}].Value`; // Adjust the name for the new row
+            inputElement.className = "form-control";
+            inputElement.type = "number";
+            inputElement.min = "1";
+
+            // Optionally set the same value as the existing input if needed
+            var existingInput = table.rows[0].cells[1].querySelector('input');
+            if (existingInput) {
+                inputElement.value = existingInput.value;
+            }
+
+            cell2.appendChild(inputElement);
+
+            // Create the third cell and add a remove button
+            var cell3 = row.insertCell(2);
+            var removeButton = document.createElement("button");
+            removeButton.type = "button";
+            removeButton.className = "btn btn-danger";
+            removeButton.onclick = function () { removeRow(this); };
+            removeButton.innerHTML = "Remove";
+            cell3.appendChild(removeButton);
+        }
+
+        function removeRow(button) {
+            var row = button.closest('tr');
+            row.parentNode.removeChild(row);
+        }
+
+
+
+
+    </script>
+}
+
+ *@

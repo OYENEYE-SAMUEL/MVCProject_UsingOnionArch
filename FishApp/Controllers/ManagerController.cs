@@ -1,6 +1,7 @@
 ﻿using Application.DTO;
 using Application.Interfaces.Services;
 using Domain.Enum;
+using FishApp.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -25,23 +26,7 @@ namespace FishApp.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult RegisterManager()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult RegisterManager(StaffRequestModel model)
-        {
-            var manager = _staffService.RegisterStaff(model);
-            if (manager.Value == null)
-            {
-                return Content(manager.Message);
-            }
-            TempData["message"] = manager.Message;
-            return RedirectToAction("DashBoard", "Admin");
-        }
+       
         [HttpGet]
         public IActionResult CreatePond()
         {
@@ -62,9 +47,9 @@ namespace FishApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetPond(string name)
+        public IActionResult GetPond(Guid id)
         {
-            var pond = _pondService.GetPondName(name);
+            var pond = _pondService.GetPondId(id);
             if (!pond.Status && pond.Value == null)
             {
                 return NotFound();
@@ -80,12 +65,37 @@ namespace FishApp.Controllers
             return View(ponds.Value);
         }
 
+        [HttpGet]
+        public IActionResult UpdatePond(Guid id)
+        {
+            var pond = _pondService.GetPondId(id);
+            var update = new PondUpdateViewModel
+            {
+                Id = pond.Value.Id,
+                Name = pond.Value.Name,
+                Description = pond.Value.Description,
+                Dimension = pond.Value.Dimension,
+            };
+            return View(update);
+        }
+
+        [HttpPost]
+        public IActionResult UpdatePond(Guid id, PondRequestModel model)
+        {
+            var pond = _pondService.UpdatePond(id, model);
+            if (pond.Value == null)
+            {
+                return Content(pond.Message);
+            }
+            TempData["inform"] = pond.Message;
+            return RedirectToAction("AllPonds");
+        }
+
         public IActionResult CreateFish()
         {
             var pond = _pondService.GetAll();
             ViewBag.allPond = new SelectList(pond.Value, "Id", "Name");
-            var model = new FishRequestModel(); 
-            return View(model);
+            return View();
         }
 
         [HttpPost]
@@ -99,6 +109,7 @@ namespace FishApp.Controllers
                 {
                     return Content(fish.Message);
                 }
+                TempData["Fishmessage"] = fish.Message;
                 return RedirectToAction("DashBoard");
             }
 
@@ -126,6 +137,27 @@ namespace FishApp.Controllers
         }
 
         [HttpGet]
+        public IActionResult UpdateFish(Guid id)
+        {
+            var fish = _fishService.GetById(id);
+            var pond = _pondService.GetAll();
+            ViewBag.allPond = new SelectList(pond.Value, "Id", "Name");
+            return View(fish.Value);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateFish(Guid id, FishRequestModel model)
+        {
+            var fish = _fishService.UpdateFish(id, model);
+            if(!fish.Status)
+            {
+                Content(fish.Message);
+            }
+            TempData["note"] = fish.Message;
+            return RedirectToAction("AllFish");
+        }
+
+        [HttpGet]
         public IActionResult GetPendingOrders()
         {
             var orders = _orderService.GetAllOrder();
@@ -133,7 +165,19 @@ namespace FishApp.Controllers
             {
                 return Content(orders.Message);
             }
+
             return View(orders.Value);
+        }
+
+        [HttpGet]
+        public IActionResult GetOrder(Guid id)
+        {
+            var order = _orderService.GetOrderById(id);
+            if (!order.Status && order.Value == null)
+            {
+                return Content(order.Message);
+            }
+            return View( order.Value);
         }
 
         [HttpGet]

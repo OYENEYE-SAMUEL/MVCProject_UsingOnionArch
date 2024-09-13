@@ -1,0 +1,309 @@
+﻿
+
+@using Application.DTO
+@using Domain.Entities
+@model ICollection<OrderResponseModel>
+
+@{
+    Layout = "_Layout2";
+}
+
+<style>
+    /* Container styling */
+    .container {
+        margin-top: 30px;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Table header styling */
+    h2 {
+        color: #28a745;
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Table styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    /* Table header cells */
+    th {
+        background-color: #28a745; /* Green header */
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-size: 16px;
+    }
+
+    /* Table body cells */
+    td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        font-size: 14px;
+        background-color: rgba(255, 255, 255, 0.9); /* Fading body color */
+    }
+
+    /* Table rows hover effect */
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Order items styling */
+    .order-items {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .order-items li {
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+
+    /* Button styling */
+    .btn-info {
+        background-color: #007bff;
+        color: white;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-info:hover {
+        background-color: #0056b3;
+    }
+
+    /* Action buttons padding */
+    .action-buttons {
+        text-align: center;
+    }
+
+    /* Empty message styling */
+    .empty-message {
+        text-align: center;
+        font-size: 18px;
+        color: #888;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container">
+    <h2>Orders History</h2>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Date Ordered</th>
+                    <th>Total Price</th>
+                    <th>Order Status</th>
+                    <th>Order Items</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.DateOrder</td>
+                        <td>@order.TotalPrice</td>
+                        <td>@order.OrderStatus</td>
+                        <td>
+                            <ul class="order-items">
+                                @foreach (var item in order.OrderItems)
+                                {
+                                    <li><strong>@item.Key:</strong> @item.Value</li>
+                                }
+                            </ul>
+                        </td>
+                        <td>
+                            <div method="get" class="action-buttons">
+                                <a asp-action="GetOrder" asp-controller="Customer" asp-route-id="@order.Id" class="btn-info">View Details</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="empty-message">
+            <p>No orders found for this customer.</p>
+        </div>
+    }
+</div>
+
+
+
+
+
+
+
+
+
+
+
+@* <style>
+    /* Container styling */
+    .container {
+        margin-top: 30px;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Table header styling */
+    h2 {
+        color: #28a745;
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Table styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    /* Table header cells */
+    th {
+        background-color: #28a745; /* Green header */
+        color: white;
+        padding: 10px;
+        text-align: left;
+        font-size: 16px;
+    }
+
+    /* Table body cells */
+    td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        font-size: 14px;
+        background-color: rgba(255, 255, 255, 0.9); /* Fading body color */
+    }
+
+    /* Table rows hover effect */
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Fish details styling */
+    .fish-info {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 10px 0;
+        font-size: 14px;
+    }
+
+    /* Order items styling */
+    .order-items {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .order-items li {
+        margin-bottom: 5px;
+    }
+
+    /* Button styling */
+    .btn-info {
+        background-color: #007bff;
+        color: white;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-info:hover {
+        background-color: #0056b3;
+    }
+
+    /* Additional padding for action buttons */
+    .action-buttons {
+        text-align: center;
+        margin-top: 10px;
+    }
+</style> *@
+
+@* <div class="container">
+    <h2>Customer Orders</h2>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>Date Ordered</th>
+                    <th>Total Price</th>
+                    <th>Order Status</th>
+                    <th>Order Items and Fish Details</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.DateOrder</td>
+                        <td>@order.TotalPrice</td>
+                        <td>@order.OrderStatus</td>
+                        <td>
+                            <!-- Fish and Order Items Details -->
+                            <div class="order-details">
+                                <h4>Fish Details:</h4>
+                                <ul class="fish-info">
+                                    @foreach (var fish in order.OrderFishes)
+                                    {
+                                        <li><strong>Fish Name:</strong> @fish.Fish.Name</li>
+                                        <li><strong>Category:</strong> @fish.Fish.CategoryType</li>
+                                    }
+                                </ul>
+                            </div> 
+                            <hr />
+                            <div class="order-details">
+                                <h4>Order Items:</h4>
+                                <ul class="order-items">
+                                    @foreach (var item in order.OrderItems)
+                                    {
+                                        <li><strong>@item.Key:</strong> @item.Value</li>
+                                    }
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <!-- Action Button -->
+                            <div class="action-buttons">
+                                <a asp-action="GetOrder" asp-controller="Customer" asp-route-id="@order.Id" class="btn btn-info">View Details</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No orders found for this customer.</p>
+    }
+</div> *@

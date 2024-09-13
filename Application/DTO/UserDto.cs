@@ -19,8 +19,8 @@ namespace Application.DTO
         public Guid Id { get; set; }
         public string Email { get; set; } = default!;
         public string FullName { get; set; } = default!;
-        public string HashSalt { get; set; } = default!;
-        public ICollection<UserRole> UserRoles { get; set; } = new HashSet<UserRole>();
+        //public ICollection<UserRole> UserRoles { get; set; } = new HashSet<UserRole>();
+        public ICollection<Role> UserRoles { get; set; } = new HashSet<Role>();
         public DateTime DateCreated { get; set; } 
     }
 }

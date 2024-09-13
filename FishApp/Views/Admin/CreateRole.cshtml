@@ -1,8 +1,9 @@
-﻿@model Application.DTO.RoleRequestModel
-@{
+﻿@using Application.DTO
+@model RoleRequestModel
+@* @{
     Layout = null;
 }
-
+ *@
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +20,7 @@
             <form asp-action="CreateRole" method="post">
                 <div class="mb-3">
                     <label asp-for="Name" class="form-label">Role Name</label>
-                    <input type="text" class="form-control" placeholder="Enter the role name" />
+                    <input type="text" name="Name" class="form-control" placeholder="Enter the role name" />
                 </div>
                 
                 <div class="d-grid mb-3">

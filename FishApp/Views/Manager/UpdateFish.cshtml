@@ -1,0 +1,158 @@
+﻿@model Application.DTO.FishRequestModel
+
+
+
+<style>
+    h4 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: bold;
+        color: #343a40;
+    }
+
+    hr {
+        border: 1px solid #007bff;
+    }
+
+    .form-control {
+        border-radius: 0.25rem;
+        border-color: #ced4da;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        font-weight: bold;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+    a.asp-action {
+        color: #007bff;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        a.asp-action:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+    .text-danger {
+        font-size: 0.875rem;
+    }
+
+
+</style>
+<h4>Update Fish</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdateFish" method="post">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Period" class="control-label"></label>
+                <input asp-for="Period" class="form-control" />
+                <span asp-validation-for="Period" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FishImage" class="control-label"></label>
+                <input type="file" class="form-control" asp-for="FishImage" />
+                <span asp-validation-for="FishImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PondId" class="form-label">Ponds</label>
+                <select asp-for="PondId" class="form-control" asp-items="ViewBag.allPond" required>
+                    <option value="0">-- Select pond --</option>
+                </select>
+                <span asp-validation-for="PondId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="AllFish">Back to List</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <h4>Update Fish</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdateFish" method="post">
+            <div class="form-group">
+                <input value="@Model.Id" name="id" type="hidden" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Period" class="control-label"></label>
+                <input asp-for="Period" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="PondId" class="form-label">Ponds</label>
+                <select asp-for="PondId" class="form-control" asp-items="ViewBag.allPond" required>
+                    <option value="0">-- Select pond --</option>
+                    <span asp-validation-for="PondId" style="color: red"></span>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="AllFish">Back to List</a>
+</div> *@

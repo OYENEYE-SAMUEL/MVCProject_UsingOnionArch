@@ -33,7 +33,7 @@ namespace Infrastructure.Repositories
 
         public Customer Create(Customer customer)
         {
-            var right = _fishContext.Customers.Add(customer);
+            _fishContext.Customers.Add(customer);
             return customer;
         }
 

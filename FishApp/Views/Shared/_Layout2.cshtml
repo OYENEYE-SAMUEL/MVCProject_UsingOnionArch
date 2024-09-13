@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FishApp</title>
+    <link rel="stylesheet" href="~/css/dashboard.css" />
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <ul>
+                <li><a asp-controller="Customer" asp-action="AllFish">All Fish</a></li>
+                <li><a asp-controller="Customer" asp-action="OrderByCustomer">All Orders</a></li>
+                <li><a asp-controller="Customer" asp-action="ViewProfile">View Profile</a></li>
+                <li><a asp-controller="Customer" asp-action="WalletBalance">View Wallet</a></li>
+                <li><a asp-controller="Customer" asp-action="FundWallet">Fund Wallet</a></li>
+                <li><a asp-controller="Customer" asp-action="UpdateCustomer">Update Profile</a></li>
+                <li><a asp-controller="Customer" asp-action="MakeOrder">Make Order</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            @RenderBody()
+        </div>
+    </div>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+
+
+
+
+
+@* 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Dashboard - FishApp</title>
+    <link rel="stylesheet" href="~/css/dashboard.css" />
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <ul>
+                <li><a asp-controller="Customer" asp-action="AllFish">All Fish</a></li>
+                <li><a asp-controller="Customer" asp-action="AllOrders">All Orders</a></li>
+                <li><a asp-controller="Customer" asp-action="ViewProfile">View Profile</a></li>
+                <li><a asp-controller="Customer" asp-action="WalletBalance">View Wallet</a></li>
+                <li><a asp-controller="Customer" asp-action="FundWallet">Fund Wallet</a></li>
+                <li><a asp-controller="Customer" asp-action="UpdateCustomer">Update Profile</a></li>
+                <li><a asp-controller="Customer" asp-action="MakeOrder">Make Order</a></li>
+            </ul>
+        </nav>
+    </body>
+ *@

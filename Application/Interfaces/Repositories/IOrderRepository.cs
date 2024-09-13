@@ -12,7 +12,7 @@ namespace Application.Interfaces.Repositories
         Order MakeOrder(Order order);
         Order GetOrder(Guid id);
         Order Update(Order order);
-        Order GetOrderByCustomer(Guid customerId);
+        ICollection<Order> GetOrderByCustomer(Guid customerId);
         ICollection<Order> AllOrders();
     }
 }

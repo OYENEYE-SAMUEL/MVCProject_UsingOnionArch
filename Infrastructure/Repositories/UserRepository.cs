@@ -26,9 +26,10 @@ namespace Infrastructure.Repositories
 
         public User Create(User user)
         {
-           var userMan = _fishContext.Users.Add(user);
+                _fishContext.Users.Add(user);
             return user;
         }
+
 
         public User Get(string email)
         {

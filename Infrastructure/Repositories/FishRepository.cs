@@ -26,7 +26,7 @@ namespace Infrastructure.Repositories
 
         public Fish Create(Fish fish)
         {
-            var choice = _fishContext.Fishes.Add(fish);
+            _fishContext.Fishes.Add(fish);
             return fish;
         }
 
@@ -34,7 +34,9 @@ namespace Infrastructure.Repositories
         {
             var orders = _fishContext.Fishes
                 .Include(v => v.FishPonds)
-                .ThenInclude(r => r.Pond.Name)
+                .ThenInclude(r => r.Pond)
+                .Include(h => h.OrderFishes)
+                .ThenInclude(e => e.Order)
                 .Where(f => f.IsDeleted == false).ToList();
             return orders;
         }
@@ -43,7 +45,9 @@ namespace Infrastructure.Repositories
         {
             var fish = _fishContext.Fishes
                 .Include(f => f.FishPonds)
-                .ThenInclude(g => g.Pond.Name)
+                .ThenInclude(g => g.Pond)
+                .Include(h => h.OrderFishes)
+                .ThenInclude(e => e.Order)
                 .FirstOrDefault(f => f.Id == id && f.IsDeleted == false);
             return fish;
         }
@@ -52,7 +56,9 @@ namespace Infrastructure.Repositories
         {
             var fish = _fishContext.Fishes
                 .Include(f => f.FishPonds)
-                .ThenInclude(r => r.Pond.Name)
+                .ThenInclude(r => r.Pond)
+                .Include(h => h.OrderFishes)
+                .ThenInclude(e => e.Order)
                 .FirstOrDefault(f => f.Name == name && f.IsDeleted == false);
             return fish;
         }

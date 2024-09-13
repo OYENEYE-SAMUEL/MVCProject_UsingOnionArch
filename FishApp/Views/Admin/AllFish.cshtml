@@ -42,7 +42,10 @@
                     <td>
                         @foreach (var pond in category.FishPonds)
                         {
-                            @pond.Pond.Name
+                            <div>
+                                @pond.Pond.Name
+                            </div>
+                            
                         }
                     </td>
                     <td>@category.CreatedBy</td>

@@ -19,6 +19,7 @@ namespace Application.DTO
         public string Password { get; set; } = default!;
         public string ConfirmedPassword { get; set; } = default!;
         public decimal Wallet { get; set; }
+        public decimal Amount { get; set; } 
     }
 
 

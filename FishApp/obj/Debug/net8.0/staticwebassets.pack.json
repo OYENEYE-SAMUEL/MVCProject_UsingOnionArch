@@ -5,12 +5,280 @@
       "PackagePath": "staticwebassets\\FishApp.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\animate.min.css",
+      "PackagePath": "staticwebassets\\Template\\css\\animate.min.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\Template\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\Template\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\Template\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\Template\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\Template\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\Template\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\Template\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\Template\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\Template\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\Template\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\Template\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\Template\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\default-skin.css",
+      "PackagePath": "staticwebassets\\Template\\css\\default-skin.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\font-awesome.min.css",
+      "PackagePath": "staticwebassets\\Template\\css\\font-awesome.min.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\icomoon.css",
+      "PackagePath": "staticwebassets\\Template\\css\\icomoon.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\jquery-ui.css",
+      "PackagePath": "staticwebassets\\Template\\css\\jquery-ui.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\jquery.fancybox.min.css",
+      "PackagePath": "staticwebassets\\Template\\css\\jquery.fancybox.min.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\jquery.mCustomScrollbar.min.css",
+      "PackagePath": "staticwebassets\\Template\\css\\jquery.mCustomScrollbar.min.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\meanmenu.css",
+      "PackagePath": "staticwebassets\\Template\\css\\meanmenu.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\nice-select.css",
+      "PackagePath": "staticwebassets\\Template\\css\\nice-select.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\normalize.css",
+      "PackagePath": "staticwebassets\\Template\\css\\normalize.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\owl.carousel.min.css",
+      "PackagePath": "staticwebassets\\Template\\css\\owl.carousel.min.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\responsive.css",
+      "PackagePath": "staticwebassets\\Template\\css\\responsive.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\slick.css",
+      "PackagePath": "staticwebassets\\Template\\css\\slick.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\css\\style.css",
+      "PackagePath": "staticwebassets\\Template\\css\\style.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\bg-1.png",
+      "PackagePath": "staticwebassets\\Template\\images\\bg-1.png"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\catfish.jpeg",
+      "PackagePath": "staticwebassets\\Template\\images\\catfish.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\catfish_33.jpg",
+      "PackagePath": "staticwebassets\\Template\\images\\catfish_33.jpg"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\catimages.jpg",
+      "PackagePath": "staticwebassets\\Template\\images\\catimages.jpg"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\contact-bg.png",
+      "PackagePath": "staticwebassets\\Template\\images\\contact-bg.png"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\fishimage.jpg",
+      "PackagePath": "staticwebassets\\Template\\images\\fishimage.jpg"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\fishmoked.jpg",
+      "PackagePath": "staticwebassets\\Template\\images\\fishmoked.jpg"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\footer-logo.png",
+      "PackagePath": "staticwebassets\\Template\\images\\footer-logo.png"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\header-bg.png",
+      "PackagePath": "staticwebassets\\Template\\images\\header-bg.png"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\imagefishes.jpg",
+      "PackagePath": "staticwebassets\\Template\\images\\imagefishes.jpg"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\left-arrow.png",
+      "PackagePath": "staticwebassets\\Template\\images\\left-arrow.png"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\quote-icon.png",
+      "PackagePath": "staticwebassets\\Template\\images\\quote-icon.png"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\right-arrow.png",
+      "PackagePath": "staticwebassets\\Template\\images\\right-arrow.png"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\salepoint.jpeg",
+      "PackagePath": "staticwebassets\\Template\\images\\salepoint.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\search-icon.png",
+      "PackagePath": "staticwebassets\\Template\\images\\search-icon.png"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\smokedanger.jpeg",
+      "PackagePath": "staticwebassets\\Template\\images\\smokedanger.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\images\\smokedimages.jpg",
+      "PackagePath": "staticwebassets\\Template\\images\\smokedimages.jpg"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\Template\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\Template\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\Template\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\Template\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\Template\\js\\bootstrap.js"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\Template\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\Template\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\Template\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\custom.js",
+      "PackagePath": "staticwebassets\\Template\\js\\custom.js"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\jquery-3.0.0.min.js",
+      "PackagePath": "staticwebassets\\Template\\js\\jquery-3.0.0.min.js"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\jquery.mCustomScrollbar.concat.min.js",
+      "PackagePath": "staticwebassets\\Template\\js\\jquery.mCustomScrollbar.concat.min.js"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\jquery.min.js",
+      "PackagePath": "staticwebassets\\Template\\js\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\Template\\js\\jquery.validate.js"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\modernizer.js",
+      "PackagePath": "staticwebassets\\Template\\js\\modernizer.js"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\plugin.js",
+      "PackagePath": "staticwebassets\\Template\\js\\plugin.js"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\popper.min.js",
+      "PackagePath": "staticwebassets\\Template\\js\\popper.min.js"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Template\\js\\slider-setting.js",
+      "PackagePath": "staticwebassets\\Template\\js\\slider-setting.js"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Uploads\\IMGimage1e-11.jpeg",
+      "PackagePath": "staticwebassets\\Uploads\\IMGimage1e-11.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Uploads\\IMGimage5b-53.jpeg",
+      "PackagePath": "staticwebassets\\Uploads\\IMGimage5b-53.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\Uploads\\IMGimage5b-af.jpeg",
+      "PackagePath": "staticwebassets\\Uploads\\IMGimage5b-af.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\css\\dashboard.css",
+      "PackagePath": "staticwebassets\\css\\dashboard.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\css\\manager.css",
+      "PackagePath": "staticwebassets\\css\\manager.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\css\\register.css",
+      "PackagePath": "staticwebassets\\css\\register.css"
+    },
+    {
       "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
       "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\js\\makeorder.js",
+      "PackagePath": "staticwebassets\\js\\makeorder.js"
     },
     {
       "Id": "C:\\Users\\USER\\Desktop\\FishAppEFCore\\FishApp\\wwwroot\\js\\site.js",

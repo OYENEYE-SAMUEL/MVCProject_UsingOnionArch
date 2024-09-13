@@ -11,10 +11,10 @@ namespace Application.Interfaces.Services
     {
         Response<FishReponseModel> CreateFish(FishRequestModel model);
         Response<FishReponseModel> GetFish(string name);
-        Response<FishReponseModel> GetFishById(Guid id);
+       /* Response<FishReponseModel> GetFishById(Guid id);*/
         Response<FishReponseModel> GetById(Guid id);
         Response<ICollection<FishReponseModel>> GetAllFish();
-        Response<FishReponseModel> UpdateCategory(Guid id, FishRequestModel model);
+        Response<FishReponseModel> UpdateFish(Guid id, FishRequestModel model);
         //Response<FishReponseModel> DeleteCategory(Guid id);
     }
 }

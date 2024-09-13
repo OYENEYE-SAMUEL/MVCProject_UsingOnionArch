@@ -1,54 +1,164 @@
 ﻿@model Application.DTO.OrderRequestModel
 @{
     ViewData["Title"] = "Create Order";
+
+    Layout = "_Layout2";
 }
 
-@{
+<style>
+    .fish-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        border: 2px solid #4CAF50;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        transition: transform 0.2s ease;
+    }
 
-    if (ViewBag.response != null)
+        .fish-item:hover {
+            transform: scale(1.02);
+            border-color: #3E8E41;
+        }
+
+    .fish-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #3E8E41;
+    }
+
+    .fish-details {
+        flex-grow: 1;
+        margin-left: 20px;
+    }
+
+    .fish-select {
+        width: 100%;
+        font-size: 16px;
+        padding: 5px;
+        margin-bottom: 10px;
+        border: 2px solid #3E8E41;
+        border-radius: 4px;
+        background-color: #E8F5E9;
+    }
+
+    .fish-price,
+    .fish-quantity {
+        font-size: 14px;
+        color: #2E7D32;
+        margin-bottom: 5px;
+    }
+
+    .fish-quantity-input {
+        width: 80px;
+        border: 2px solid #3E8E41;
+        border-radius: 4px;
+        padding: 5px;
+    }
+
+    .fish-actions {
+        display: flex;
+        align-items: center;
+    }
+
+        .fish-actions .btn {
+            margin-left: 10px;
+            background-color: #d32f2f;
+            color: white;
+            border-radius: 4px;
+        }
+
+            .fish-actions .btn:hover {
+                background-color: #c62828;
+            }
+
+    .btn-success {
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        .btn-success:hover {
+            background-color: #45A049;
+        }
+
+    .btn-primary {
+        background-color: #2196F3;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        .btn-primary:hover {
+            background-color: #1976D2;
+        }
+
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .table-bordered {
+        border: 2px solid #4CAF50;
+    }
+
+</style>
+
+
+
+@{
+    if (TempData["response"] != null)
     {
-        <div class="alert alert-success">
-            @TempData["response"]
-        </div>
+            <div class="alert alert-success">
+                @TempData["response"]
+            </div>
     }
 }
 
-<h2>Create a New Order</h2>
 
-<form asp-action="CreateOrder" method="post">
-    <div class="form-group">
-        <label asp-for="OrderStatus" class="control-label">Order Status</label>
-        <select asp-for="OrderStatus" class="form-control">
-            <option value="Pending">Pending</option>
-            <option value="Approved">Approved</option>
-            <option value="Rejected">Rejected</option>
-        </select>
-    </div>
 
+
+<p id="viewBag" hidden>@ViewBag.FishListJson</p>
+<p id="index" hidden>0</p>
+<form asp-action="MakeOrder" method="post">
     <h3>Order Fish Items</h3>
-    <table class="table">
+    <table class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th>Fish</th>
+                <th>Fish Image</th>
+                <th>Details</th>
                 <th>Quantity</th>
                 <th></th>
             </tr>
         </thead>
+
         <tbody id="order-fish-items">
-            @for (int i = 0; i < Model.OrderFishItems.Count; i++)
-            {
-                <tr>
-                    <td>
-                        <select asp-for="OrderFishItems" class="form-control" name="OrderFishItems[@i].Key" asp-items="ViewBag.allFish"></select>
-                    </td>
-                    <td>
-                        <input asp-for="OrderFishItems" class="form-control" name="OrderFishItems[@i].Value" asp-items="ViewBag.allFish" type="number" min="1" />
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>
-                    </td>
-                </tr>
-            }
+            <tr>
+                <td><img src="" alt="Fish Image" class="fish-image" /></td>
+                <td>
+                    <div class="fish-item">
+                        <div class="fish-details">
+                            <select  id="fish-select" class="form-control fish-select" asp-items="ViewBag.allFish">
+                            </select>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="fish-actions">
+                        <input id="fish-quantity" class="form-control fish-quantity-input" value="1" type="number" min="1" />
+                    </div>
+                </td>
+            </tr>
         </tbody>
     </table>
 
@@ -57,104 +167,6 @@
 </form>
 
 @section Scripts {
-    <script type="text/javascript">
-        // Deserialize the FishList JSON passed from the ViewBag
-        var fishList = @Html.Raw(ViewBag.FishListJson);
 
-        function addNewRow() {
-            var table = document.getElementById('order-fish-items');
-            var rowCount = table.rows.length;
-            var row = table.insertRow(rowCount);
-
-            var cell1 = row.insertCell(0);
-            var selectElement = document.createElement("select");
-            selectElement.setAttribute("name", "OrderFishItems[" + rowCount + "].Key");
-            selectElement.setAttribute("class", "form-control");
-
-            // Populate the select element with options
-            fishList.forEach(function (fish) {
-                var option = document.createElement("option");
-                option.value = fish.Value; // Id of the fish
-                option.text = fish.Text; // Name of the fish
-                selectElement.appendChild(option);
-            });
-
-            cell1.appendChild(selectElement);
-
-            var cell2 = row.insertCell(1);
-            var valueInput = document.createElement("input");
-            valueInput.setAttribute("name", "OrderFishItems[" + rowCount + "].Value");
-            valueInput.setAttribute("class", "form-control");
-            valueInput.setAttribute("type", "number");
-            valueInput.setAttribute("min", "1");
-            cell2.appendChild(valueInput);
-
-            var cell3 = row.insertCell(2);
-            var removeButton = document.createElement("button");
-            removeButton.setAttribute("type", "button");
-            removeButton.setAttribute("class", "btn btn-danger");
-            removeButton.setAttribute("onclick", "removeRow(this)");
-            removeButton.innerHTML = "Remove";
-            cell3.appendChild(removeButton);
-        }
-
-        function removeRow(button) {
-            var row = button.closest('tr');
-            row.parentNode.removeChild(row);
-        }
-    </script>
+    <script src="~/js/makeorder.js"></script>
 }
-
-@* @model Application.DTO.OrderRequestModel
-@{
-
-    if (ViewBag.response != null)
-    {
-        @ViewBag.response
-        ;
-    }
-}
-
-<head>
-    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
-</head>
-
-<div class="container d-flex align-items-center justify-content-center">
-    <div class="card p-4 shadow-sm w-100" style="max-width: 650px;">
-        <h3 class="text-center mb-4">Make Order</h3>
-
-        <form asp-action="MakeOrder" method="post">
-            <div class="form-group">
-                <input asp-for="CustomerEmail" value="" type="hidden" class="form-control" />
-            </div>
-            <ul>
-                @for (var i = 0; i < ViewBag.count; i++)
-                {
-                    <li>
-                        <div class="mb-3">
-                            <label asp-for="OrderFishItems" class="form-label">Fish Type</label>
-                            <select asp-for="OrderFish" class="form-control" name="OrderFish[@i].Key" asp-items="ViewBag.categoryAll">
-                                <option value="0">-- Select fish type--</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Quantity</label>
-                            <input type="number" class="form-control" placeholder="Quantity" name="OrderFish[@i].Value" />
-                        </div>
-
-
-                    </li>
-                }
-            </ul>
-            <button type="submit" class="btn btn-primary">Make Order</button>
-        </form>
-    </div>
-</div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-} *@
-
-

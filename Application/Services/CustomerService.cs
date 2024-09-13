@@ -40,11 +40,14 @@ namespace Application.Services
                 };
             }
 
+            var salt = BCrypt.Net.BCrypt.GenerateSalt(20);
+            var hashPassword = BCrypt.Net.BCrypt.HashPassword(model.Password, salt).ToString();
+
             var user = new User()
             {
                 Email = model.Email,
-                Password = model.Password,
-                ConfirmedPassword = model.ConfirmedPassword,
+                Password = hashPassword,
+                ConfirmedPassword = hashPassword,
                 FullName = $"{model.FirstName} {model.LastName}",
             };
 
@@ -54,7 +57,6 @@ namespace Application.Services
                 Role newRole = new Role()
                 {
                     Name = "Customer",
-                    CreatedBy = model.Email,
                 };
                 user.UserRoles.Add(new UserRole
                 {
@@ -85,7 +87,6 @@ namespace Application.Services
                 Address = model.Address,
                 Gender = model.Gender,
                 PhoneNumber = model.PhoneNumber,
-                CreatedBy = _currentUser.GetCurrentUser(),
                 Wallet = model.Wallet
 
             };
@@ -130,6 +131,7 @@ namespace Application.Services
                 Status = true,
                 Value = new CustomerResponseModel
                 {
+                    Id = customer.Id,
                     FirstName = customer.FirstName,
                     LastName = customer.LastName,
                     Email = customer.Email,
@@ -199,9 +201,9 @@ namespace Application.Services
 
         
 
-        public Response<CustomerResponseModel> Update(CustomerRequestModel model)
+        public Response<CustomerResponseModel> Update(Guid id, CustomerRequestModel model)
         {
-            var customer = _customerRepo.GetByEmail(model.Email);
+            var customer = _customerRepo.GetById(id);
             if (customer == null)
             {
                 return new Response<CustomerResponseModel>
@@ -218,6 +220,8 @@ namespace Application.Services
             customer.PhoneNumber = model.PhoneNumber;
             customer.Address = model.Address;
             customer.Wallet = model.Wallet;
+            _customerRepo.Update(customer);
+            _unitOfWork.Save();
             return new Response<CustomerResponseModel>
             {
                 Message = "Updated successfully",
@@ -238,7 +242,31 @@ namespace Application.Services
 
         public Response<CustomerResponseModel> ViewProfile(string email)
         {
-            throw new NotImplementedException();
+            var customer = _customerRepo.GetByEmail(email);
+            if (customer == null)
+            {
+                return new Response<CustomerResponseModel>
+                {
+                    Message = "Customer Not Found",
+                    Status = false,
+                    Value = null
+                };
+            }
+            return new Response<CustomerResponseModel>
+            {
+                Status = true,
+                Value = new CustomerResponseModel
+                {
+
+                    FirstName = customer.FirstName,
+                    LastName = customer.LastName,
+                    Address = customer.Address,
+                    PhoneNumber = customer.PhoneNumber,
+                    Email = customer.Email,
+                    Gender = customer.Gender,
+                     
+                }
+            };
         }
 
         public Response<CustomerResponseModel> FundWallet(CustomerRequestModel model, decimal amount)
@@ -255,6 +283,7 @@ namespace Application.Services
             }
             customer.Wallet += amount;
             _customerRepo.Update(customer);
+            _unitOfWork.Save();
             return new Response<CustomerResponseModel>
             {
                 Message = "Wallet funded successfully",
@@ -262,6 +291,29 @@ namespace Application.Services
                 Value = new CustomerResponseModel
                 {
                     Wallet = customer.Wallet
+                }
+            };
+        }
+
+        public Response<CustomerResponseModel> ViewCustomerWallet(string email)
+        {
+            var customer = _customerRepo.GetByEmail(email);
+            if (customer == null)
+            {
+                return new Response<CustomerResponseModel>
+                {
+                    Message = "Customer Not Found",
+                    Value = null,
+                    Status = false
+                };
+            }
+
+            return new Response<CustomerResponseModel>
+            {
+                Status = true,
+                Value = new CustomerResponseModel
+                {
+                    Wallet = customer.Wallet,
                 }
             };
         }

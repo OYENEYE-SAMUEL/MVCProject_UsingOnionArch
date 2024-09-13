@@ -18,17 +18,35 @@ namespace Infrastructure.Repositories
         }
         public string GetCurrentUser()
         {
-            var httpContext = _contextAccessor.HttpContext;
-            if (httpContext.User.Identity == null || !httpContext.User.Identity.IsAuthenticated)
+            try
             {
-                throw new InvalidOperationException("No authenticated user found");
+                var httpContext = _contextAccessor.HttpContext;
+                var emailClaim = httpContext.User.FindFirst(ClaimTypes.Email);
+                
+                return emailClaim.Value;
             }
-            var emailClaim = httpContext.User.FindFirst(ClaimTypes.Email);
-            if (emailClaim == null)
+            
+            catch (Exception)
             {
                 throw new InvalidOperationException("Email claim not found.");
             }
-            return emailClaim.Value;
+         
+        }
+
+        public string GetCurrentUserId()
+        {
+            try
+            {
+                var httpContext = _contextAccessor.HttpContext;
+                var emailClaim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+
+                return emailClaim.Value;
+            }
+
+            catch (Exception)
+            {
+                throw new InvalidOperationException("Id claim not found.");
+            }
         }
     }
 }

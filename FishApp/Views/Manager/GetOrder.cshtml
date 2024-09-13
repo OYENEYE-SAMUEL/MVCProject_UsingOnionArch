@@ -1,0 +1,316 @@
+@model Application.DTO.OrderResponseModel
+
+<style>
+    .header-title {
+        color: #28a745;
+        font-family: 'Arial', sans-serif;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .detail-section {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .fish-image-container {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .fish-image-container img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid #28a745;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .detail-item {
+        margin-bottom: 10px;
+        font-family: 'Verdana', sans-serif;
+        font-size: 16px;
+        text-align: left;
+    }
+
+        .detail-item strong {
+            color: #007bff;
+            font-weight: 600;
+        }
+
+    .pond-list {
+        list-style-type: square;
+        padding-left: 20px;
+        color: #495057;
+        text-align: left;
+    }
+
+        .pond-list li {
+            margin-bottom: 5px;
+            font-family: 'Verdana', sans-serif;
+            font-size: 15px;
+        }
+
+    .alert-warning {
+        background-color: #ffc107;
+        color: #856404;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+        max-width: 600px;
+        margin: 20px auto;
+        font-family: 'Verdana', sans-serif;
+    }
+
+    .approve-button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    .approve-button:hover {
+        background-color: #0056b3;
+    }
+
+    .detail-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .fish-details {
+        width: 100%;
+        text-align: left;
+    }
+
+    .button-container {
+        margin-top: 20px;
+        text-align: center;
+    }
+</style>
+
+@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    ViewData["Title"] = "Order Details";
+}
+
+@if (Model != null)
+{
+    <h2 class="header-title">Order Details</h2>
+    <div class="detail-section">
+        <div class="detail-wrapper">
+            <!-- Fish Images -->
+            <div class="fish-image-container">
+                @foreach (var order in Model.OrderFishes)
+                {
+                    <img src="~/Uploads/@order.Fish.FishImage" alt="Fish Image" />
+                }
+            </div>
+
+            <!-- Fish Details -->
+            <div class="fish-details">
+                <div class="detail-item">
+                    <strong>Order Date:</strong> @Model.DateOrder
+                </div>
+                <div class="detail-item">
+                    <strong>Total Price:</strong> @Model.TotalPrice
+                </div>
+                <div class="detail-item">
+                    <strong>Customer's Email:</strong> @Model.CreatedBy
+                </div>
+
+                <!-- Items Ordered -->
+                <div class="detail-item">
+                    <strong>Items Ordered:</strong>
+                    <ul class="pond-list">
+                        @foreach (var orders in Model.OrderItems)
+                        {
+                            <li><strong>@orders.Key:</strong> @orders.Value</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Approve Button -->
+            <div class="button-container">
+                <a href="@Url.Action("ApprovedOrders", "Manager", new { id = Model.Id })" class="approve-button">Approve Order</a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert-warning">
+        <strong>No order is initiated.</strong>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* 
+@model Application.DTO.OrderResponseModel
+
+<style>
+    .header-title {
+        color: #28a745;
+        font-family: 'Arial', sans-serif;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .detail-section {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .fish-image-container {
+        margin-bottom: 20px;
+    }
+
+    .fish-image-container img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid #28a745;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .detail-item {
+        margin-bottom: 10px;
+        font-family: 'Verdana', sans-serif;
+        font-size: 16px;
+        text-align: left;
+    }
+
+        .detail-item strong {
+            color: #007bff;
+            font-weight: 600;
+        }
+
+    .pond-list {
+        list-style-type: square;
+        padding-left: 20px;
+        color: #495057;
+        text-align: left;
+    }
+
+        .pond-list li {
+            margin-bottom: 5px;
+            font-family: 'Verdana', sans-serif;
+            font-size: 15px;
+        }
+
+    .alert-warning {
+        background-color: #ffc107;
+        color: #856404;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+        max-width: 600px;
+        margin: 20px auto;
+        font-family: 'Verdana', sans-serif;
+    }
+
+    .detail-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .fish-details {
+        width: 100%;
+    }
+</style>
+
+@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    ViewData["Title"] = "Get Fish";
+}
+
+@if (Model != null)
+{
+    <h2 class="header-title">Order's Details</h2>
+    <div class="detail-section">
+        <div class="detail-wrapper">
+            <!-- Fish Image -->
+            <div class="detail-item">
+                    <ul class="pond-list">
+                        @foreach (var order in Model.OrderFishes)
+                        {
+                            <li>  <img src="~/Uploads/@order.Fish.FishImage/li>
+                        }
+                    </ul>
+                </div>
+            
+
+            <!-- Fish Details -->
+            <div class="fish-details">
+                <div class="detail-item">
+                    <strong>Name:</strong> @Model.DateOrder
+                </div>
+                <div class="detail-item">
+                    <strong>Price:</strong> @Model.TotalPrice
+                </div>
+                <div class="detail-item">
+                    <strong>Customer's Email:</strong> @Model.CreatedBy
+                
+                    <strong>Created By:</strong> @Model.CreatedBy
+                </div>
+                <div class="detail-item">
+                    <strong>Items Ordered:</strong>
+                    <ul class="pond-list">
+                        @foreach (var orders in Model.OrderItems)
+                        {
+                            <li>@orders.Key</li>
+                            <li>@orders.Value</li>
+                        }
+                    </ul>
+                </div>
+                <div class="alert alert-warning">
+        <strong> <a href="@Url.Action("ApprovedOrders", "Manager", new { id = order.Id })" class="btn btn-primary">Approve</a></strong>
+    </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning">
+        <strong>No pond is found.</strong>
+    </div>
+} *@

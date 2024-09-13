@@ -1,29 +1,185 @@
-﻿
-@{
-    // if(TempData["alert"] != null)
-    // {
-    //     @TempData["alert"]
-    // }
+﻿@{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    ViewBag.Title = "Customer Dashboard - FishApp";
+}
 
-    if (TempData["message"] != null)
+<div class="main-content">
+    <!-- Navbar -->
+    <div class="navbar">
+        <h2>Customer Dashboard</h2>
+    </div>
+
+    <!-- TempData Messages -->
+    @if (TempData["alert"] != null)
     {
         <div class="alert alert-success">
-            @TempData["message"]
+            @TempData["alert"]
+        </div>
+    }
+    @if (TempData["fundMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["fundMessage"]
+        </div>
+    }
+    @if (TempData["updateMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["updateMessage"]
+        </div>
+    }
+
+    <!-- Dashboard Cards -->
+    <div class="dashboard-cards">
+        <div class="card">  
+            <a asp-controller="Customer" asp-action="AllFish">All Fish</a>
+        </div>
+        <div class="card">
+            <a asp-controller="Customer" asp-action="OrderByCustomer">All Orders</a>
+        </div>
+        <div class="card">
+            <a asp-controller="Customer" asp-action="ViewProfile">View Profile</a>
+        </div>
+        <div class="card">
+            <a asp-controller="Customer" asp-action="WalletBalance">View Wallet</a>
+        </div>
+        <div class="card">
+            <a asp-controller="Customer" asp-action="FundWallet">Fund Wallet</a>
+        </div>
+        <div class="card">
+            <a asp-controller="Customer" asp-action="UpdateCustomer">Update Profile</a>
+        </div>
+        <div class="card">
+            <a asp-controller="Customer" asp-action="MakeOrder">Make Order</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* @{
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    ViewBag.Title = "FishApp";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Dashboard - FishApp</title>
+    <link rel="stylesheet" href="~/css/dashboard.css" />
+</head>
+<body>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Navbar -->
+            <div class="navbar">
+                <h2>Customer Dashboard</h2>
+            </div>
+
+            <!-- TempData Messages -->
+            @if (TempData["alert"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["alert"]
+                </div>
+            }
+            @if (TempData["fundMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["fundMessage"]
+                </div>
+            }
+            @if (TempData["updateMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["updateMessage"]
+                </div>
+            }
+
+            <!-- Dashboard Cards -->
+            <div class="dashboard-cards">
+                <div class="card">
+                    <a asp-controller="Customer" asp-action="AllFish">All Fish</a>
+                </div>
+                <div class="card">
+                    <a asp-controller="Customer" asp-action="AllOrders">All Orders</a>
+                </div>
+                <div class="card">
+                    <a asp-controller="Customer" asp-action="ViewProfile">View Profile</a>
+                </div>
+                <div class="card">
+                    <a asp-controller="Customer" asp-action="WalletBalance">View Wallet</a>
+                </div>
+                <div class="card">
+                    <a asp-controller="Customer" asp-action="FundWallet">Fund Wallet</a>
+                </div>
+                <div class="card">
+                    <a asp-controller="Customer" asp-action="UpdateCustomer">Update Profile</a>
+                </div>
+                <div class="card">
+                    <a asp-controller="Customer" asp-action="MakeOrder">Make Order</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+ *@
+
+
+
+
+
+
+
+
+@* @{
+    if (TempData["alert"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["alert"]
+        </div>
+    }
+
+    if (TempData["fundMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["fundMessage"]
+        </div>
+    }
+
+    if (TempData["updateMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["updateMessage"]
         </div>
     }
 }
 <table>
     <tbody>
         <tr>
-            <td><a asp-controller="Customer" asp-action="AllCategories" class="btn btn-secondary">All Category</a></td>
-            <td><a asp-controller="Customer" asp-action="OrderCount" class="btn btn-secondary">Make Order</a></td>
+            <td><a asp-controller="Customer" asp-action="AllFish" class="btn btn-secondary">All Fish</a></td>
             <td><a asp-controller="Customer" asp-action="AllOrders" class="btn btn-secondary">All Orders</a></td>
             <td><a asp-controller="Customer" asp-action="ViewProfile" class="btn btn-secondary">View Profile</a></td>
-            <td><a asp-controller="Customer" asp-action="ViewCustomerWallet" class="btn btn-secondary">View Wallet</a></td>
+            <td><a asp-controller="Customer" asp-action="WalletBalance" class="btn btn-secondary">View Wallet</a></td>
             <td><a asp-controller="Customer" asp-action="FundWallet" class="btn btn-secondary">Fund Wallet</a></td>
             <td><a asp-controller="Customer" asp-action="UpdateCustomer" class="btn btn-secondary">Update Profile</a></td>
+            <td><a asp-controller="Customer" asp-action="MakeOrder" class="btn btn-secondary">Make Order</a></td>
         </tr>
     </tbody>
 </table>
 
-
+ *@

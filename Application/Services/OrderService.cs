@@ -3,12 +3,6 @@ using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Domain.Entities;
 using Domain.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -19,13 +13,17 @@ namespace Application.Services
         private readonly ICurrentUser _currentUser;
         private readonly ICustomerRepository _customerRepo;
         private readonly IUnitOfWork _unitOfWork;
-        public OrderService(IOrderRepository orderRepo, IFishRepository fishRepo, ICurrentUser currentUser, ICustomerRepository customerRepo, IUnitOfWork unitOfWork)
+        private readonly IOrderFishRepository _orderFishRepo;
+        private readonly IStaffRepository _staffRepo;
+        public OrderService(IOrderRepository orderRepo, IFishRepository fishRepo, ICurrentUser currentUser, ICustomerRepository customerRepo, IUnitOfWork unitOfWork, IOrderFishRepository orderFishRepo, IStaffRepository staffRepo)
         {
             _orderRepo = orderRepo;
             _fishRepo = fishRepo;
             _currentUser = currentUser;
             _customerRepo = customerRepo;
             _unitOfWork = unitOfWork;
+            _orderFishRepo = orderFishRepo;
+            _staffRepo = staffRepo;
         }
         Response<OrderResponseModel> IOrderService.MakeOrder(OrderRequestModel model)
         {
@@ -44,43 +42,65 @@ namespace Application.Services
                     }
                 };
             }
-
-            foreach (var item in model.OrderFishItems)
+            /* var fish = _fishRepo.GetByName(model.OrderFishes.Select(f => new OrderFish { Fish = f.Fish}).ToString());*/
+            foreach (var item in model.OrderItems)
             {
-                var fishQuan = _fishRepo.GetByName(item.Key);
-                if ((fishQuan.Quantity < item.Value || fishQuan.Quantity == 0) && fishQuan == null)
+                var fish = _fishRepo.GetByName(item.Key);
+                if (fish == null)
                 {
-                    /*return new Response<OrderResponseModel>
+                    return new Response<OrderResponseModel>
                     {
                         Message = "Fish not available presently",
-                        Status = false,*/
+                        Status = false,
+                    };
+
+                }
+                if (fish.Quantity < item.Value || fish.Quantity == 0)
+                {     
                     return new Response<OrderResponseModel>()
                     {
-                        Message = $"The remaining quantity of {item.Key} is {fishQuan.Quantity} which is less than the quantity ordered /{item.Key}",
+                        Message = $"The remaining quantity of {item.Key} is {fish.Quantity} which is less than the quantity ordered /{item.Key}",
                         Status = false,
                     Value = null
                     };
                 }
 
-                fishQuan.Quantity -= item.Value; 
-                _fishRepo.Update(fishQuan);
-
+                fish.Quantity -= item.Value; 
                 customer.Wallet -= newPrice;
+                _fishRepo.Update(fish);
                 _customerRepo.Update(customer);
 
             }
+            var manager = _staffRepo.GetByEmail("sam@gmail.com");
              var order = new Order()
                 {
                     OrderStatus = Status.Pending,
-                    OrderFishItems = model.OrderFishItems.Select(f => new OrderFish()
+                    OrderItems = model.OrderItems.Select(f => new OrderItem()
                     {
                         Key = f.Key,
                         Value = f.Value,
                     }).ToList(),
                     TotalPrice = newPrice,
                     CreatedBy = customer.Email,
+                    CustomerId = customer.Id,
+                    Staff = manager,
+                    
                 };
-                _orderRepo.MakeOrder(order);
+
+            foreach (var item in model.OrderItems)
+            {
+                var fish = _fishRepo.GetByName(item.Key);
+                OrderFish orderFish = new OrderFish
+                {
+                    Order = order,
+                    OrderId = order.Id,
+                    Fish = fish,
+                    FishId = fish.Id
+                };
+                _orderFishRepo.Create(orderFish);
+            } 
+
+             _orderRepo.MakeOrder(order);
             _unitOfWork.Save();
 
             return new Response<OrderResponseModel>()
@@ -90,7 +110,7 @@ namespace Application.Services
                 Value = new OrderResponseModel
                 {
                     OrderStatus = order.OrderStatus,
-                    OrderFishItems = order.OrderFishItems.Select(f => new OrderFishResponseModel()
+                    OrderItems = order.OrderItems.Select(f => new OrderItemResponseModel()
                     {
                         Key = f.Key,
                         Value = f.Value,
@@ -98,7 +118,9 @@ namespace Application.Services
                     DateOrder = order.DateOrder,
                     TotalPrice = order.TotalPrice,
                     CreatedBy = order.CreatedBy,
-
+                    CustomerId = order.CustomerId,
+                    Staff = order.Staff
+                    
                 }
             };
         }
@@ -106,62 +128,119 @@ namespace Application.Services
         private decimal CalculateTotalCost(OrderRequestModel model)
         {
             decimal total = 0;
-            foreach (var item in model.OrderFishItems)
+            foreach (var item in model.OrderItems)
             {
                 var fish = _fishRepo.GetByName(item.Key);
                 total += fish.Price * item.Value;
+                
             }
             return total;
         }
         public Response<ICollection<OrderResponseModel>> GetAllOrder()
         {
             var orders = _orderRepo.AllOrders();
-            var listOfOrder = orders.Select(o => new OrderResponseModel
-            {
-                DateOrder = o.DateOrder,
-                CreatedBy = o.CreatedBy,
-                TotalPrice = o.TotalPrice,
-                OrderStatus = o.OrderStatus,
-                OrderFishItems = o.OrderFishItems.Select(f => new OrderFishResponseModel()
-                {
-                    Key = f.Key,
-                    Value = f.Value
-                }).ToList(),
-            }).ToList();
-            return new Response<ICollection<OrderResponseModel>>
-            {
-                Value = listOfOrder,
-                Status = true
-            };
-        }
 
-        public Response<OrderResponseModel> GetOrderByCustomer(Guid customerId)
-        {
-            var order = _orderRepo.GetOrderByCustomer(customerId);
-            if (order == null)
+            if (orders == null || !orders.Any())
             {
-                return new Response<OrderResponseModel>
+                return new Response<ICollection<OrderResponseModel>>
                 {
-                    Message = "Order not Found",
+                    Message = "No pending orders found.",
                     Status = false,
                     Value = null
                 };
             }
+            var listOfOrders = orders.
+                Where(f => f.OrderStatus == Status.Pending)
+                .Select(f => new OrderResponseModel
+                {
+                    Id = f.Id,
+                    DateOrder = f.DateOrder,
+                    CreatedBy = f.CreatedBy,
+                    TotalPrice = f.TotalPrice,
+                    OrderStatus = f.OrderStatus,
+                    OrderItems = f.OrderItems.Select(f => new OrderItemResponseModel
+                    {
+                        Id = f.Id,
+                        Key = f.Key,
+                        Value = f.Value,
+                        OrderId = f.OrderId
+                    }).ToList(),
 
-            return new Response<OrderResponseModel>
+                }).ToList();
+
+            return new Response<ICollection<OrderResponseModel>>
+            {
+                Value = listOfOrders,
+                Status = true
+            };
+
+
+
+        }
+
+
+        //    var listOfOrder = orders.Select(o => new OrderResponseModel
+        //    {
+
+        //        Id = o.Id,
+        //        DateOrder = o.DateOrder,
+        //        CreatedBy = o.CreatedBy,
+        //        TotalPrice = o.TotalPrice,
+        //        OrderStatus = o.OrderStatus,
+        //        OrderItems = o.OrderItems.Select(f => new OrderItemResponseModel
+        //        {
+        //            Id = f.Id,
+        //            Key = f.Key,
+        //            Value = f.Value,
+        //            OrderId = f.OrderId
+        //        }).ToList(),
+
+        //    }).ToList();
+        //    return new Response<ICollection<OrderResponseModel>>
+        //    {
+        //        Value = listOfOrder,
+        //        Status = true
+        //    };
+        //}
+
+        public Response<ICollection<OrderResponseModel>> GetOrderByCustomer(Guid customerId)
+        {
+            var order = _orderRepo.GetOrderByCustomer(customerId);
+            if(order == null)
+            {
+                return new Response<ICollection<OrderResponseModel>>
+                {
+                    Message = "Customer instance Not Found",
+                    Status = false,
+                    Value = null
+                };
+            }
+            
+
+            var listOfOrder = order.Select(o => new OrderResponseModel
+            {
+                Id = o.Id,
+                DateOrder = o.DateOrder,
+                TotalPrice = o.TotalPrice,
+                OrderStatus = o.OrderStatus == Status.Pending ? Status.Pending: Status.Delivered,
+                OrderItems = o.OrderItems.Select(f => new OrderItemResponseModel()
+                {
+                    Id = f.Id,
+                    OrderId = f.OrderId,
+                    Key = f.Key,
+                    Value = f.Value
+                }).ToList(),
+                OrderFishes = o.OrderFishes.Select(e => new OrderFish
+                {
+                    OrderId = e.OrderId,
+                    Id = e.Id,
+                    Fish = e.Fish,
+                }).ToList()
+            }).ToList();
+            return new Response<ICollection<OrderResponseModel>>
             {
                 Status = true,
-                Value = new OrderResponseModel
-                {
-                    DateOrder = order.DateOrder,
-                    TotalPrice = order.TotalPrice,
-                    OrderFishItems = order.OrderFishItems.Select(f => new OrderFishResponseModel()
-                    {
-                        Key = f.Key,
-                        Value = f.Value
-                    }).ToList(),
-                   OrderStatus = order.OrderStatus,
-                }
+                Value = listOfOrder,
             };
         }
 
@@ -183,15 +262,23 @@ namespace Application.Services
                 Status = true,
                 Value = new OrderResponseModel
                 {
+                    Id = order.Id,
                     DateOrder = order.DateOrder,
                     TotalPrice = order.TotalPrice,
-                    OrderFishItems = order.OrderFishItems.Select(f => new OrderFishResponseModel()
+                    OrderItems = order.OrderItems.Select(f => new OrderItemResponseModel()
                     {
+                        OrderId = f.OrderId,
+                        Id = f.Id,
                         Key = f.Key,
                         Value = f.Value
                     }).ToList(),
+                    OrderFishes = order.OrderFishes.Select(e => new OrderFish
+                    {
+                        Fish = e.Fish,
+                    }).ToList(),
                     CreatedBy = order.CreatedBy,
                     OrderStatus = order.OrderStatus,
+                    Staff = order.Staff
                 }
             };
         }
@@ -207,7 +294,7 @@ namespace Application.Services
                     Status = false,
                 };
             }
-            if (order.Staff == null || order.Staff.Email != order.CreatedBy)
+            if (order.Staff == null)
             {
                 return new Response<OrderResponseModel>
                 {
@@ -217,24 +304,30 @@ namespace Application.Services
             }
             order.OrderStatus = Status.Approved;
             _orderRepo.Update(order);
+            _unitOfWork.Save();
             return new Response<OrderResponseModel>
             {
                 Message = "Order approved successfully",
                 Status = true,
                 Value = new OrderResponseModel
                 {
+                    Id = order.Id,
                     CreatedBy = order.CreatedBy,
                     OrderStatus = order.OrderStatus,
                     DateOrder = order.DateOrder,
                     TotalPrice = order.TotalPrice,
-                    OrderFishItems = order.OrderFishItems.Select(f => new OrderFishResponseModel()
+                    Staff = order.Staff,
+                    OrderItems = order.OrderItems.Select(f => new OrderItemResponseModel()
                     {
+                        Id = f.Id,
+                        OrderId = f.OrderId,
                         Key = f.Key,
                         Value = f.Value
                     }).ToList(),
                 }
             };
         }
+          
 
         public Response<OrderResponseModel> DeliveredOrder(Guid orderId)
         {
@@ -250,18 +343,23 @@ namespace Application.Services
             
             order.OrderStatus = Status.Delivered;
             _orderRepo.Update(order);
+            _unitOfWork.Save();
             return new Response<OrderResponseModel>
             {
                 Message = "Order approved successfully",
                 Status = true,
                 Value = new OrderResponseModel
                 {
+                    Id = order.Id,
                     CreatedBy = order.CreatedBy,
                     OrderStatus = order.OrderStatus,
                     DateOrder = order.DateOrder,
                     TotalPrice = order.TotalPrice,
-                    OrderFishItems = order.OrderFishItems.Select(f => new OrderFishResponseModel()
+                    Staff = order.Staff,
+                    OrderItems = order.OrderItems.Select(f => new OrderItemResponseModel()
                     {
+                        Id = f.Id,
+                        OrderId = f.OrderId,
                         Key = f.Key,
                         Value = f.Value
                     }).ToList(),

@@ -27,9 +27,8 @@ namespace FishApp.Controllers
 
         [HttpGet]
         public IActionResult CreateRole()
-        {
-            var model = new RoleRequestModel();
-            return View(model);
+        {    
+            return View();
         }
 
         [HttpPost]
@@ -65,6 +64,24 @@ namespace FishApp.Controllers
             }
             return View(roles.Value);
 
+        }
+
+        [HttpGet]
+        public IActionResult RegisterManager()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult RegisterManager(StaffRequestModel model)
+        {
+            var manager = _staffService.RegisterStaff(model);
+            if (manager.Value == null)
+            {
+                return Content(manager.Message);
+            }
+            TempData["message"] = manager.Message;
+            return RedirectToAction("DashBoard", "Admin");
         }
 
         [HttpGet]

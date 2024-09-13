@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.Repositories;
 using Domain.Entities;
 using Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,26 +20,35 @@ namespace Infrastructure.Repositories
 
         public Order MakeOrder(Order order)
         {
-            var choice = _fishContext.Orders.Add(order);
+            _fishContext.Orders.Add(order);
             return order;
         }
         public ICollection<Order> AllOrders()
         {
-            var orders = _fishContext.Orders.Where(p => p.IsDeleted == false).ToList();
+            var orders = _fishContext.Orders
+                .Include(e => e.OrderFishes)
+                .ThenInclude(f => f.Fish)
+                .Include(r => r.OrderItems)
+                .Where(p => p.IsDeleted == false).ToList();
             return orders;
         }
 
         public Order GetOrder(Guid id)
         {
-            var order = _fishContext.Orders.FirstOrDefault
-                (o => o.Id == id && o.IsDeleted == false);
+            var order = _fishContext.Orders
+                .Include(x => x.Staff)
+                .Include(t => t.OrderFishes)
+                .ThenInclude(e => e.Fish)
+                .Include(e => e.OrderItems)
+                .FirstOrDefault(o => o.Id == id && o.IsDeleted == false);
             return order;
         }
 
-        public Order GetOrderByCustomer(Guid customerId)
+        public ICollection<Order> GetOrderByCustomer(Guid customerId)
         {
-            var order = _fishContext.Orders.FirstOrDefault
-                (o => o.CustomerId == customerId && o.IsDeleted == false);
+            var order = _fishContext.Orders
+                .Include(e => e.OrderItems)
+                .Where(o => o.CustomerId == customerId && o.IsDeleted == false).ToList();
             return order;
         }
 

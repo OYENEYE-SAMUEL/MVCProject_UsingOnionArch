@@ -9,5 +9,6 @@ namespace Application.Interfaces.Repositories
     public interface ICurrentUser
     {
         string GetCurrentUser();
+        string GetCurrentUserId();
     }
 }

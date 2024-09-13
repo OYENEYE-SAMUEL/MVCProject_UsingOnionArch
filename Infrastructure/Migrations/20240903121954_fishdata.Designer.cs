@@ -11,15 +11,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(FishContext))]
-    [Migration("20240809215400_initial")]
-    partial class initial
+    [Migration("20240903121954_fishdata")]
+    partial class fishdata
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Domain.Entities.Customer", b =>
@@ -82,6 +82,9 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("FishImage")
+                        .HasColumnType("longtext");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
@@ -96,8 +99,8 @@ namespace Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("Quantity")
-                        .HasColumnType("double");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -146,6 +149,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("OrderStatus")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("StaffId")
+                        .HasColumnType("char(36)");
+
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -153,10 +159,33 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
+                    b.HasIndex("StaffId");
+
                     b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Domain.Entities.OrderFish", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("FishId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FishId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderFishes");
+                });
+
+            modelBuilder.Entity("Domain.Entities.OrderItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -176,7 +205,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderFishItems");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Domain.Entities.Pond", b =>
@@ -186,6 +215,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedBy")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("DateCreated")
@@ -202,6 +232,10 @@ namespace Infrastructure.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PondImage")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -238,6 +272,15 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a00b9b11-48af-473e-9602-ef84a691f0b4"),
+                            DateCreated = new DateTime(2024, 9, 3, 12, 19, 53, 348, DateTimeKind.Utc).AddTicks(4486),
+                            IsDeleted = false,
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Staff", b =>
@@ -313,10 +356,6 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("HashSalt")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
@@ -327,6 +366,19 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6e895023-15f7-4016-9baa-078e3224d272"),
+                            ConfirmedPassword = "superadmin",
+                            CreatedBy = "Super Admin",
+                            DateCreated = new DateTime(2024, 9, 3, 12, 19, 53, 77, DateTimeKind.Utc).AddTicks(9573),
+                            Email = "superadmin@gmail.com",
+                            FullName = "Super Admin",
+                            IsDeleted = false,
+                            Password = "$2b$10$gBaPME0HonlVxXg6ztz4sOaR0mbIdFfWBBTE8p.wiVnNVFWOWEgE6"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.UserRole", b =>
@@ -348,6 +400,14 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("92d8dc8d-d2d0-4aad-b05c-bfde64aedfa7"),
+                            RoleId = new Guid("a00b9b11-48af-473e-9602-ef84a691f0b4"),
+                            UserId = new Guid("6e895023-15f7-4016-9baa-078e3224d272")
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.FishPond", b =>
@@ -377,13 +437,38 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.Staff", "Staff")
+                        .WithMany()
+                        .HasForeignKey("StaffId");
+
                     b.Navigation("Customer");
+
+                    b.Navigation("Staff");
                 });
 
             modelBuilder.Entity("Domain.Entities.OrderFish", b =>
                 {
+                    b.HasOne("Domain.Entities.Fish", "Fish")
+                        .WithMany("OrderFishes")
+                        .HasForeignKey("FishId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.Order", "Order")
-                        .WithMany("OrderFishItems")
+                        .WithMany("OrderFishes")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Fish");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("Domain.Entities.OrderItem", b =>
+                {
+                    b.HasOne("Domain.Entities.Order", "Order")
+                        .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -418,11 +503,15 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Fish", b =>
                 {
                     b.Navigation("FishPonds");
+
+                    b.Navigation("OrderFishes");
                 });
 
             modelBuilder.Entity("Domain.Entities.Order", b =>
                 {
-                    b.Navigation("OrderFishItems");
+                    b.Navigation("OrderFishes");
+
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("Domain.Entities.Pond", b =>
